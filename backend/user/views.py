@@ -16,7 +16,12 @@ class Dashboard(View):
             request,
             'user/dashboard.html'
         )
+        
 
+        
+        
+
+        
 
 class Register(View):
     
@@ -29,7 +34,7 @@ class Register(View):
                 error = None,
                 ),
         )
-        
+         
         
     def post(self, request, *args, **kwargs):
         form = CustomUserCreationForm(request.POST)
