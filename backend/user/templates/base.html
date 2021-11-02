@@ -11,5 +11,14 @@ the thing, and this pretty much being my first app, I will make a basic front en
 
 <br><br><br>
 
+
+{% if user.username %}
 {% block content %}
 {% endblock %}
+{% else %}
+
+
+LOGIN FORM
+
+
+{% endif %}
