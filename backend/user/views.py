@@ -7,13 +7,18 @@ from user.forms import CustomUserCreationForm
 
 
 
-# Create your views here.
-def dashboard(request):
-    return render(request, 'user/dashboard.html')
 
 
+class Dashboard(View):
+    
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            'user/dashboard.html'
+        )
 
-class RegisterView(View):
+
+class Register(View):
     
     def get(self, request, *args, **kwargs):
         return render(
