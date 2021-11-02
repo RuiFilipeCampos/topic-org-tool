@@ -3,8 +3,8 @@
 from django.conf.urls import url
 
 ## importing the views
-from users.views import dashboard
+from user.views import dashboard
 
-url_patterns = [
+urlpatterns = [
     url("dashboard/", dashboard, name="dashboard"),
 ]
