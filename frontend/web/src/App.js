@@ -3,55 +3,52 @@ import {
   ChakraProvider,
   Box,
   Text,
-  Link,
   VStack,
   Code,
   Grid,
   theme,
-} from '@chakra-ui/react';
 
-
-import {
+  // form stuff
   FormControl,
   FormLabel,
   FormErrorMessage,
   FormHelperText,
-} from "@chakra-ui/react"
+  Center,
+  Input,
+  Button,
+} from '@chakra-ui/react';
 
+
+import {useRouter} from 'react'
 
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+} from "react-router-dom";
+
+
+import Login from './pages/login'
+import Dashboard  from './pages/dashboard';
+
 function App() {
+
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <h1>Login to <b>TOPIC-ORG</b></h1>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <FormControl id="login">
-              <FormLabel textAlign="center">User Name</FormLabel>
-              <input placeholder="Username" />
-              <FormLabel textAlign="center">Password</FormLabel>
-              <input type="password" />
-            </FormControl>
-            <Link
-              color="teal.500"
-              href=""
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Login
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
+    <Router>
+          <Switch>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+            <Route path="/">
+              <Login />
+            </Route>
+          </Switch>
+    </Router>
     </ChakraProvider>
   );
 }
