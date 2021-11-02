@@ -5,7 +5,7 @@
 
 - tutorial, but looks legit enough: https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
 - https://jwt.io/introduction/
-
+- https://jwt.io/introduction/
 
 
 
