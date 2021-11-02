@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
-
+from django.contrib.auth import login
 
 # Internal Imports
 from user.forms import CustomUserCreationForm
@@ -31,7 +31,7 @@ class RegisterView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("dashboard/")
+            return redirect("/user/dashboard/")
         
         else:
             return render(

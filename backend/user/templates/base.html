@@ -9,12 +9,23 @@ the thing, and this pretty much being my first app, I will make a basic front en
 <br>
 -------------------------------------------------------------------------------------------------------------------------
 
-<br><br><br>
+
+<br><br>
 
 
 {% if user.username %}
+You are logged in as <b>{{user.username}}.</b> <a href = "/user/logout/">Logout</a>. 
+
+<br>
+-------------------------------------------------------------------------------------------------------------------------
+
 {% block content %}
 {% endblock %}
+
+
+
+LOGOUT
+
 {% else %}
 
 No one is logged in!!
