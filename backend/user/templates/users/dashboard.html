@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+Current user: { {user.username|default:"No one is logged in!"} }
+{% endblock %}
