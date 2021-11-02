@@ -7,9 +7,6 @@ from django.views.generic import View
 
 
 
-
-
-
 class Topic(View):
     def get(self, request, *args, **kwargs):
         pass

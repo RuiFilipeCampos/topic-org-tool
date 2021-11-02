@@ -4,6 +4,8 @@ from django.db import models
 
 
 
+
+
 class Topic(model.Model):
     
     owner = models.ForeignKey(

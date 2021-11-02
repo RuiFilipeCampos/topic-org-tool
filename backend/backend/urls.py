@@ -18,8 +18,33 @@ from django.conf.urls import include, url
 from django.urls import path
 
 urlpatterns = [
-    url("", include("user.urls")),
-    url("", include("topic.urls")),
-    url("user/", include("django.contrib.auth.urls")),
-    path('admin/', admin.site.urls),
+    url(
+        "", 
+        include("user.urls")
+        ),
+    
+    url(
+        "",
+        include("topic.urls")
+        ),
+    
+    url(
+        "user/", 
+        include(
+            "django.contrib.auth.urls"
+            )
+        ),
+    
+    path(
+        'admin/',
+        admin.site.urls
+        ),
+    
+    url(
+        '', 
+        include(
+            'social_django.urls',
+            namespace='social'
+            )
+        ),
 ]

@@ -3,6 +3,8 @@
 
 
 {% block content %}
+<a href="{% url "social:begin" "google-oauth2" %}">Google+</a>
+
 
 <h2> LOGIN PAGE </h2>
 
@@ -12,6 +14,9 @@
     {{ form.as_p }}
     <input type="submit" value="Login">
 </form>
+
+
+<a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
 {% endblock %}
 
 

@@ -13,26 +13,18 @@ from django.urls import reverse, resolve
 class Dashboard(View):
     
     def get(self, request, *args, **kwargs):
-        
 
+
+        # get a list of all topics 
         uri = request.build_absolute_uri("/topic/")
-        
-        
         response = requests.get(uri)
 
-        
-        
-        
+
         
         return render(
             request,
             'user/dashboard.html'
         )
-        
-
-        
-        
-
         
 
 class Register(View):

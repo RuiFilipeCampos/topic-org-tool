@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',  
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -63,6 +65,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -103,6 +107,25 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGOUT_REDIRECT_URL = "/user/dashboard/"
 LOGIN_REDIRECT_URL = "/user/dashboard/"
 
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.open_id.OpenIdAuth',
+    #'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
+
+SOCIAL_AUTH_GITHUB_KEY = 'd14caf1c5460651b17ac'
+
+SOCIAL_AUTH_GITHUB_SECRET = 'cf44e1300c13f210a3024ea2a85b3e8f8ecafbc3'
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -126,3 +149,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
