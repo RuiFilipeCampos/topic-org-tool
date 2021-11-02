@@ -1,0 +1,2 @@
+requests
+social-auth-app-django

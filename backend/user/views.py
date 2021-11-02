@@ -16,6 +16,8 @@ class Dashboard(View):
 
 
         # get a list of all topics 
+        # I'm skipping authorizations til I get to the react stuff
+        
         uri = request.build_absolute_uri("/topic/")
         response = requests.get(uri)
 
