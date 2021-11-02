@@ -6,12 +6,24 @@ from django.contrib.auth import login
 from user.forms import CustomUserCreationForm
 
 
+import requests 
 
-
+from django.urls import reverse, resolve
 
 class Dashboard(View):
     
     def get(self, request, *args, **kwargs):
+        
+
+        uri = request.build_absolute_uri("/topic/")
+        
+        
+        response = requests.get(uri)
+
+        
+        
+        
+        
         return render(
             request,
             'user/dashboard.html'

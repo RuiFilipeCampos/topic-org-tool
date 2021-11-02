@@ -11,7 +11,7 @@ urlpatterns = [
     url(
         "topic/",
         view.TopicList.as_view(),
-        name="topic_list"
+        name="topic-list"
         ),
     url(
         "topic/<str:username>/<str:topic_name>",
