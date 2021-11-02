@@ -5,7 +5,7 @@ I will dedicate a lot of time to this tool. Cuz I'll be using it. Still haven't 
 - Django Backend
 
 ---
-
+```
 ---------------
 *sections (+/-)*
 sec1 | sec2 | sec3 .... (editable) (w/cool templates)
@@ -28,5 +28,6 @@ c2
 c3
   c3.1
 c4
+```
 
 
