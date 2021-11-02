@@ -1,0 +1,27 @@
+{% extends "registration/base.html" %}
+
+
+{% block content %}
+
+<h2> Register </h2>
+
+
+{% if  form %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Register">
+</form>
+
+{% else %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ error }}
+    <input type="submit" value="Register">
+</form>
+
+
+{% endif %}
+{% endblock %}
