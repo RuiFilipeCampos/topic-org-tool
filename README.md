@@ -1,8 +1,17 @@
-I will dedicate a lot of time to this tool. Cuz I'll be using it. Still haven't decided on the name.
+
+##### login
 
 
-- React Front end
-- Django Backend
+
+- tutorial, but looks legit enough: https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
+- https://jwt.io/introduction/
+
+
+
+
+----
+
+
 
 ### state of project
 
