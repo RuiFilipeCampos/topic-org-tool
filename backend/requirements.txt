@@ -1,2 +1,4 @@
 requests
 social-auth-app-django
+django-cors-headers
+django-cryptography

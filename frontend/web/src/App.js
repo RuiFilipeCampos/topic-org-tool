@@ -33,6 +33,7 @@ import {
 
 
 import Login from './pages/login'
+import Register from './pages/register'
 import Dashboard  from './pages/dashboard';
 
 function App() {
@@ -43,6 +44,9 @@ function App() {
           <Switch>
             <Route path="/dashboard">
               <Dashboard />
+            </Route>
+            <Route path="/register">
+              <Register />
             </Route>
             <Route path="/">
               <Login />

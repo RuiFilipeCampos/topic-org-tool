@@ -1,61 +1,50 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views.generic import View
-from django.contrib.auth import login
-
-# Internal Imports
-from user.forms import CustomUserCreationForm
 
 
-import requests 
-
-from django.urls import reverse, resolve
-
-class Dashboard(View):
-    
-    def get(self, request, *args, **kwargs):
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
-        # get a list of all topics 
-        # I'm skipping authorizations til I get to the react stuff
-        
-        uri = request.build_absolute_uri("/topic/")
-        response = requests.get(uri)
 
 
-        
-        return render(
-            request,
-            'user/dashboard.html'
-        )
-        
 
+@method_decorator(csrf_exempt, name="dispatch")
 class Register(View):
     
-    def get(self, request, *args, **kwargs):
-        return render(
-            request,
-            "registration/register.html",
-            dict(
-                form = CustomUserCreationForm,
-                error = None,
-                ),
-        )
-         
-        
     def post(self, request, *args, **kwargs):
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect("/user/dashboard/")
+        """Create a new user.
+        """
+        import json
+        from user.models import User
+
+        data = json.loads(
+            request.body
+        )
+
+        try: 
+            User.objects.get(pk = data["username"])
+            return HttpResponse("error")
+        except User.DoesNotExist:
+            pass
         
-        else:
-            return render(
-                request,
-                "registration/register.html",
-                dict(
-                    form = None,
-                    error = str(form),
-                    )   
-            )
-  
+        try: 
+            User.objects.get(email = data["email"])
+            return HttpResponse("error")
+        except User.DoesNotExist:
+            pass
+        
+        
+        User(**data).save()
+        return HttpResponse("abc")
+    
+
+
+
+class UserLogin(View):
+    def post(self, request, *args, **kwargs):
+        """Login a user.
+        """
+        pass
+    

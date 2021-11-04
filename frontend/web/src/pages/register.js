@@ -24,25 +24,55 @@ import axios from 'axios';
 
 
 
-function Login() {
+function Register() {
 
     const [user, setUser] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = event => {
         event.preventDefault();
-        alert(`User: ${user} & Password: ${password}`);
+
+        var body = {
+            email: email,
+            username: user,
+            password: password,
+        };
+
+        axios.post('http://127.0.0.1:8000/user/register/', body)
+            .then(function (response) {
+                alert(response);
+            })
+            .catch(function (error) {
+                alert(error);
+            });
+      
+
+        alert(` Email: ${email} & User: ${user} & Password: ${password}`);
     };
 
 
     return (
-      <Center h="500px"> 
+      <Center h="650px"> 
           <Box textAlign="center" fontSize="xl">
-              <h1>Login to <b>TOPIC-ORG</b>...</h1>
+              <h1>Register to <b>TOPIC-ORG</b>...</h1>
               <br/>
               <br/>
               <form onSubmit={handleSubmit}>
-                
+
+                <FormControl isRequired>
+                      <FormLabel textAlign="center">
+                          E-Mail
+                      </FormLabel>
+                      <Input 
+                          placeholder="Your email..."
+                          onChange={event => setEmail(event.currentTarget.value)}
+                      />
+                      <br/>
+                      <br/>
+                  </FormControl>
+
+
                   <FormControl isRequired>
                       <FormLabel textAlign="center">
                           Username
@@ -74,15 +104,15 @@ function Login() {
 
                   <FormControl isRequired>
                       <Button type="submit"  color="primary" textAlign="center"> 
-                          Login
+                          Register
                       </Button>  
                   </FormControl>
               </form>
               <br/> <br/>
-              Or register <Link href="register">here</Link>...
+              <Link href="/">Click here to go back to login...</Link>
           </Box>
       </Center>
     );
   }
 
-export default Login;
+export default Register;
