@@ -4,16 +4,33 @@ from django_cryptography.fields import encrypt
 
 
 
+
+
+
+
 class User(models.Model):
     username = models.CharField(
         max_length=50,
         primary_key=True,
     )
     
-    password = encrypt(models.CharField(
+    password = models.CharField(
         max_length=100
-    ))
+    )
     
-    email = encrypt(models.CharField(
+    email = models.CharField(
         max_length=100
-    ))
+    )
+    
+    
+    
+    @classmethod
+    def match_field(cls, field_name, field_value):
+
+        try: 
+            cls.objects.get(
+                **{field_name : field_value}
+            )
+            return True
+        except cls.DoesNotExist:
+            return False
