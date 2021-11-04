@@ -23,6 +23,8 @@ import {
 import { useHistory } from "react-router-dom";
 
 import axios from 'axios';
+import CoolBox from "../components/coolbox"
+import ControlledInput from "../components/controlled"
 
 
 function getCookie(name) {
@@ -52,8 +54,6 @@ function Login() {
 
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
-
-
     let history = useHistory()
 
 
@@ -62,8 +62,8 @@ function Login() {
         event.preventDefault();
 
         var request_body = {
-          username: user,
-          password: password,
+            username: user,
+            password: password,
         };
 
         axios.post('http://127.0.0.1:8000/user/login/', request_body)
@@ -80,6 +80,8 @@ function Login() {
         alert(`User: ${user} & Password: ${password}`);
     };
 
+
+
     const base_height = 300
 
     return (
@@ -90,53 +92,29 @@ function Login() {
         </Text>
       </Center>
       <Center h={ (base_height - 150).toString() }> 
-          <Box textAlign="center" fontSize="xl"
-            textAlign    = "center" 
-            fontSize     = "xl"
-            boxShadow    = "dark-lg"
-            p            = "10"
-            rounded      = "md"
-            outline      = "a" 
-            outlineColor = "black"
-          >
+          <CoolBox>
               <h1>Login to <b>TOPIC-ORG</b>...</h1>
               <br/><br/>
-              <form onSubmit={handleSubmit}>               
-                  <FormControl isRequired>
-                      <FormLabel textAlign="center">
-                          Username
-                      </FormLabel>
-                      <Input 
-                          id = "user" 
-                          placeholder="Your username..."
-                          onChange={event => setUser(event.currentTarget.value)}
-                      />
-                      <br/>
-                      <br/>
-                  </FormControl>
+              <form onSubmit={handleSubmit}>    
+                  <ControlledInput 
+                            label       = "Username"
+                            placeHolder = "a_cool_person"
+                            onChange    = {event => setUser(event.currentTarget.value)}
+                  />
 
-                  <FormControl isRequired>
-                      <FormLabel textAlign="center">
-                          Password
-                      </FormLabel>
-                      <Input 
-                          type = "password" 
-                          id   = "pass"
-                          placeholder = "*******"
-                          onChange={event => setPassword(event.currentTarget.value)}
-                      />  
-                      <br/>
-                      <br/>
-                  </FormControl>
-
+                  <ControlledInput 
+                        label       = "Password"
+                        type        = "password" 
+                        placeHolder = "*******"
+                        onChange    = {event => setPassword(event.currentTarget.value)}
+                  />
                   <FormControl isRequired>
                       <Button type="submit"  color="primary" textAlign="center"> 
                           Login
                       </Button>  
                   </FormControl>
-
               </form>
-          </Box>
+          </CoolBox>
       </Center>
       </>
     );
