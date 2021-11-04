@@ -33,7 +33,7 @@ import {
 
 
 import Login from './pages/login'
-import Register from './pages/register'
+import Register, {RegisterSuccess} from './pages/register'
 import Dashboard  from './pages/dashboard';
 
 function App() {
@@ -41,17 +41,24 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
     <Router>
-          <Switch>
+        <Switch>
+
             <Route path="/dashboard">
-              <Dashboard />
+                <Dashboard />
             </Route>
+
+            <Route path="/register/success">
+                <RegisterSuccess />
+            </Route>
+
             <Route path="/register">
-              <Register />
+                <Register />
             </Route>
+            
             <Route path="/">
-              <Login />
+                <Login />
             </Route>
-          </Switch>
+        </Switch>
     </Router>
     </ChakraProvider>
   );

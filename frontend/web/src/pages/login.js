@@ -17,6 +17,7 @@ import {
   Center,
   Input,
   Button,
+  Spacer,
 } from '@chakra-ui/react';
 
 
@@ -34,10 +35,25 @@ function Login() {
         alert(`User: ${user} & Password: ${password}`);
     };
 
+    const base_height = 300
 
     return (
-      <Center h="500px"> 
-          <Box textAlign="center" fontSize="xl">
+      <> 
+      <Center h={ (base_height + 0).toString() }>
+        <Text> 
+            <b> Login </b> | <Link href="register"><u>Register</u></Link>
+        </Text>
+      </Center>
+      <Center h={ (base_height - 150).toString() }> 
+          <Box textAlign="center" fontSize="xl"
+            textAlign    = "center" 
+            fontSize     = "xl"
+            boxShadow    = "dark-lg"
+            p="10"
+            rounded = "md"
+            outline      = "a" 
+            outlineColor = "black"
+          >
               <h1>Login to <b>TOPIC-ORG</b>...</h1>
               <br/>
               <br/>
@@ -78,10 +94,9 @@ function Login() {
                       </Button>  
                   </FormControl>
               </form>
-              <br/> <br/>
-              Or register <Link href="register">here</Link>...
           </Box>
       </Center>
+      </>
     );
   }
 

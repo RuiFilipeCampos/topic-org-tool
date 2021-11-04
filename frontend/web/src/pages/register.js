@@ -17,14 +17,18 @@ import {
   Center,
   Input,
   Button,
+
 } from '@chakra-ui/react';
 
+import {Flex, Spacer} from '@chakra-ui/react'
 
 import axios from 'axios';
 
-
+import { useHistory } from "react-router-dom";
 
 function Register() {
+    let history = useHistory()
+
 
     const [user, setUser] = useState('');
     const [email, setEmail] = useState('');
@@ -33,28 +37,45 @@ function Register() {
     const handleSubmit = event => {
         event.preventDefault();
 
-        var body = {
+        var request_body = {
             email: email,
             username: user,
             password: password,
         };
 
-        axios.post('http://127.0.0.1:8000/user/register/', body)
+        axios.post('http://127.0.0.1:8000/user/register/', request_body)
             .then(function (response) {
-                alert(response);
+                var response_body = response.data
+
+                if (response_body.code == 200){
+                    history.push('success')
+                }
+
             })
             .catch(function (error) {
                 alert(error);
             });
-      
-
-        alert(` Email: ${email} & User: ${user} & Password: ${password}`);
     };
 
+    let base_height = 300
 
     return (
-      <Center h="650px"> 
-          <Box textAlign="center" fontSize="xl">
+        <>
+        <Center h={ (base_height + 0).toString() }>
+            <Text> 
+            <Link href="/"> <u>Login</u> </Link> | <b>Register</b>
+            </Text>
+        </Center>
+      <Center h={ (base_height - 40).toString() }> 
+          <Box 
+            textAlign    = "center" 
+            fontSize     = "xl"
+            boxShadow    = "dark-lg"
+            p           ="10"
+            rounded = "md"
+            outline      = "a" 
+            outlineColor = "black"
+          >
               <h1>Register to <b>TOPIC-ORG</b>...</h1>
               <br/>
               <br/>
@@ -72,7 +93,6 @@ function Register() {
                       <br/>
                   </FormControl>
 
-
                   <FormControl isRequired>
                       <FormLabel textAlign="center">
                           Username
@@ -85,8 +105,6 @@ function Register() {
                       <br/>
                       <br/>
                   </FormControl>
-
-
 
                   <FormControl isRequired>
                       <FormLabel textAlign="center">
@@ -108,11 +126,37 @@ function Register() {
                       </Button>  
                   </FormControl>
               </form>
-              <br/> <br/>
-              <Link href="/">Click here to go back to login...</Link>
           </Box>
       </Center>
+      </>
     );
   }
 
 export default Register;
+
+
+
+export function RegisterSuccess(){
+    return (
+    <>
+    <VStack >
+        <Spacer /><Spacer /><Spacer /><Spacer />
+        <Spacer /><Spacer /><Spacer /><Spacer />
+        <Spacer /><Spacer /><Spacer /><Spacer />
+        <Spacer /><Spacer /><Spacer /><Spacer />
+        <Flex>
+            <Spacer />
+            <Box w="170px" h="100px" bg="red.500" >
+                <VStack>
+                    <Spacer/><Spacer />
+                    <Center>
+                        <h1>Successfully logged in to </h1>
+                    </Center>
+                </VStack>
+            </Box>
+            <Spacer />
+        </Flex>
+    </VStack>
+    </>
+    )
+}
