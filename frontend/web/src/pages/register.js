@@ -32,9 +32,8 @@ import ControlledInput from "../components/controlled"
 function Register() {
     let history = useHistory()
 
-
-    const [user, setUser] = useState('');
-    const [email, setEmail] = useState('');
+    const [user,     setUser]     = useState('');
+    const [email,    setEmail]    = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = event => {
@@ -45,7 +44,6 @@ function Register() {
             username: user,
             password: password,
         };
-
 
         axios.post('http://127.0.0.1:8000/user/register/', request_body)
             .then(function (response) {
@@ -85,7 +83,7 @@ function Register() {
                         label       = "Username"
                         placeHolder = "a_cool_person"
                         onChange    = {event => setUser(event.currentTarget.value)}
-                  />
+                 />
                  <ControlledInput 
                         label       = "Password"
                         type        = "password" 

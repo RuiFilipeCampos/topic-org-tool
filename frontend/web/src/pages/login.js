@@ -82,10 +82,14 @@ function Login() {
 
 
 
-    const base_height = 300
+    const base_height = 210
 
     return (
-      <> 
+      <>          
+      <Center h="100">
+
+        <Text>A clean place to <b>think</b>, <i>plan</i> and <u>execute</u>...</Text>
+      </Center>
       <Center h={ (base_height + 0).toString() }>
         <Text> 
             <b> Login </b> | <Link href="register"><u>Register</u></Link>
@@ -101,7 +105,6 @@ function Login() {
                             placeHolder = "a_cool_person"
                             onChange    = {event => setUser(event.currentTarget.value)}
                   />
-
                   <ControlledInput 
                         label       = "Password"
                         type        = "password" 
