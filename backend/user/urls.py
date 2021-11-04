@@ -15,4 +15,11 @@ urlpatterns = [
         view.Register.as_view(),
         name="register"
         ),
+    
+    # this is for loggin in new users 
+    url(
+        "/user/login/",
+        view.Login.as_view(),
+        name="login"
+        ),
 ]

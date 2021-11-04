@@ -23,47 +23,71 @@ from user.models import User
 
 @method_decorator(csrf_exempt, name="dispatch")
 class Register(View):
-    
+
     def post(self, request, *args, **kwargs):
         """Create a new user.
         """
         
-        data = json.loads(
-            request.body
-        )
-
+        data = json.loads(request.body)
         
-        
-        if User.match_field(
-            "username", data["username"]
-        )\
-        or User.match_field(
-            "email", data["email"]
-        ):
-            
-            
+        if User.match_field("username", data["username"])\
+        or User.match_field("email",    data["email"]   ):
             return JsonResponse(dict(
                 message = "Email or Username already exists.",
                 code = 3033,
             ))
 
-
         plaintext_password = data["password"]
         encrypted_password = make_password(plaintext_password)
-        
+
         assert check_password(plaintext_password, encrypted_password)
-           
+ 
         data["password"] = encrypted_password
         User(**data).save()
-        return JsonResponse(dict(
-            code=200,
-        ))
+        return JsonResponse(
+                dict(code=200,)
+        )
 
 
-
-class UserLogin(View):
+class Login(View):
+    
+    def dispatch(self, *args, **kwargs):
+        
+        raise RuntimeError("sup")
+        
+    
+        return super(Login, self).dispatch(*args, **kwargs)
+                
+    def options(self, request, id):
+        response = HttpResponse()
+        response['allow'] = ','.join([self.allowed_methods])
+        return response
+    
     def post(self, request, *args, **kwargs):
         """Login a user.
         """
-        pass
-    
+        
+        
+        # need to take care of cross site registration forgery stuff
+        
+        data = json.loads(request.body)
+
+        try:
+            user = User.objects.get(
+                username=data["username"]
+            )
+        except User.DoesNotExist:       
+            return JsonResponse(dict(
+                code = 404, #need to check these codes
+                message = "Username does not exist!",
+            ))
+        
+        
+        if user.password == make_password(data["password"]):
+            
+            # login stuff happens here rite?
+            
+            
+            return JsonResponse(dict(code=200))
+
+        return JsonResponse(dict(code=404, message="Username/Password does not match."))
