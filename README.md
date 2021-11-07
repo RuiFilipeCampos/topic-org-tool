@@ -26,7 +26,9 @@
 
 ### Landing Page (also the login page): `/`
 
-![image](https://user-images.githubusercontent.com/63464503/140637734-514511a1-3c73-4e60-8ee2-ba367cc2a1b4.png)
+![image](https://user-images.githubusercontent.com/63464503/140642356-c0d1d394-b75f-4d41-8210-072ab890f328.png)
+
+
 
 - sends POST request via the `axios` package
 
