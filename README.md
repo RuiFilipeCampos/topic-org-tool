@@ -21,31 +21,41 @@
 
 # State of the Project
 
-## The frontend
+## Frontend
 
 
-### The landing page `/`
+### Landing Page (also the login page): `/`
 
 ![image](https://user-images.githubusercontent.com/63464503/140637734-514511a1-3c73-4e60-8ee2-ba367cc2a1b4.png)
 
+- sends POST request via the `axios` package
 
-### The registration page `/register`
+
+### Registration Page: `/register`
 
 ![image](https://user-images.githubusercontent.com/63464503/140637748-8436943d-38c2-4ed8-a3e4-4202b77bd2de.png)
 
-### User dashboard `/dashboard`
+- sends POST request via the `axios` package
+
+### User Dashboard: `/dashboard`
 
 ![image](https://user-images.githubusercontent.com/63464503/140637821-755cd50b-1cb7-4caf-bcaa-484bad16db81.png)
 
 
+## Backend
 
-#### the `user` app
+### User app
 
-this app is a placeholder for the react front end, just so I can figure out the details of the backend (my first full implementation of an auth rest api)
+Handles login stuff, currently has two views:
 
-#### the `topic` and `thread` apps
+- Login -> receives post requests (still deciding on the credentials stuff)
+- Register -> receives post requests and creates the user in the db 
 
-these are the center piece of this app :p, and will be a REST API implementation  
+### Section app
+
+### Topic App
+
+### Thread app
 
 
 ### how its meant to work
