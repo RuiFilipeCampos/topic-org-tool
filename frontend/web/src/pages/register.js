@@ -26,6 +26,27 @@ import CoolBox from "../components/coolbox"
 import ControlledInput from "../components/controlled"
 
 
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+  
+  
+  const csrftoken = getCookie('csrftoken');
+  
+  axios.defaults.headers.common['X-CSRF-TOKEN'] = csrftoken;
+  // axios.defaults.headers.post['Content-Type'] = "text/plain";
 
 
 
@@ -47,6 +68,8 @@ function Register() {
 
         axios.post('http://127.0.0.1:8000/user/register/', request_body)
             .then(function (response) {
+
+                console.log("hello")
                 var response_body = response.data
 
                 if (response_body.code == 200){
@@ -55,20 +78,26 @@ function Register() {
 
             })
             .catch(function (error) {
+                console.log("hello")
+
+                alert("Error?")
                 alert(error);
             });
     };
 
-    let base_height = 300
+    const base_height = -10
 
     return (
     <>
-      <Center h={ (base_height + 0).toString() }>
+    <Center h="200">
+    <Text>A clean place to <b>think</b>, <i>plan</i> and <u>execute</u>...</Text>
+    </Center>
+      <Center h={ (base_height ).toString() }>
           <Text> 
           <Link href="/"> <u>Login</u> </Link> | <b>Register</b>
           </Text>
       </Center>
-      <Center h={ (base_height - 40).toString() }> 
+      <Center h={ (base_height + 540).toString() }> 
           <CoolBox>
               <h1>Register to <b>TOPIC-ORG</b>...</h1>
               <br/>

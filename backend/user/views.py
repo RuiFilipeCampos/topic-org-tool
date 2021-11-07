@@ -24,6 +24,15 @@ from user.models import User
 @method_decorator(csrf_exempt, name="dispatch")
 class Register(View):
 
+
+
+
+    
+    
+    
+    def has_object_permission( self, *args, **kwargs ):
+        print("\n\n\n\n")
+
     def post(self, request, *args, **kwargs):
         """Create a new user.
         """
@@ -47,21 +56,12 @@ class Register(View):
         return JsonResponse(
                 dict(code=200,)
         )
+        
 
 
 class Login(View):
     
-    def dispatch(self, *args, **kwargs):
-        
-        raise RuntimeError("sup")
-        
-    
-        return super(Login, self).dispatch(*args, **kwargs)
-                
-    def options(self, request, id):
-        response = HttpResponse()
-        response['allow'] = ','.join([self.allowed_methods])
-        return response
+
     
     def post(self, request, *args, **kwargs):
         """Login a user.

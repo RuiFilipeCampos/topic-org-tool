@@ -224,8 +224,18 @@ function Dashboard() {
             <SearchForm />
         </Flex>
         </Box>
-        <Box>
-            
+        <Box bg="gray.100" shadow="md">
+        <Flex
+            alignItems="center"
+            mx={0}
+            borderWidth={15}
+            borderColor="gray.100"
+            overflowX="auto"
+        >
+          <b>Description</b>:
+          <br/>
+           <p>This is where the description of the purpose of the section is meant to be. </p>
+        </Flex>
         </Box>
     </>
   );

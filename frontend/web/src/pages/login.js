@@ -1,23 +1,11 @@
 import React, {useState} from 'react';
 import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-
+  Text, Link, Center,
+  Input, Button,
+VStack,
   // form stuff
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Center,
-  Input,
-  Button,
-  Spacer,
+  FormControl, FormLabel,
+  FormErrorMessage, FormHelperText,
 } from '@chakra-ui/react';
 
 import { useHistory } from "react-router-dom";
@@ -25,6 +13,10 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import CoolBox from "../components/coolbox"
 import ControlledInput from "../components/controlled"
+
+
+
+
 
 
 function getCookie(name) {
@@ -48,11 +40,12 @@ const csrftoken = getCookie('csrftoken');
 
 
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrftoken;
+axios.defaults.headers.post['Content-Type'] = "text/plain";
 
 
 function Login() {
 
-    const [user, setUser] = useState('');
+    const [user,     setUser] = useState('');
     const [password, setPassword] = useState('');
     let history = useHistory()
 
@@ -82,15 +75,17 @@ function Login() {
 
 
 
-    const base_height = 210
+    const base_height = -10
 
     return (
       <>          
-      <Center h="100">
+      <Center h="200">
 
         <Text>A clean place to <b>think</b>, <i>plan</i> and <u>execute</u>...</Text>
       </Center>
-      <Center h={ (base_height + 0).toString() }>
+
+      <VStack>
+      <Center h={ (base_height).toString() }>
         <Text> 
             <b> Login </b> | <Link href="register"><u>Register</u></Link>
         </Text>
@@ -119,6 +114,7 @@ function Login() {
               </form>
           </CoolBox>
       </Center>
+      </VStack>
       </>
     );
   }
