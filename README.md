@@ -26,7 +26,7 @@
 
 ### Landing Page (also the login page): `/`
 
-![image](https://user-images.githubusercontent.com/63464503/140642762-f638cc4d-a59a-4e80-8281-b005e2f0ad14.png)
+![image](https://user-images.githubusercontent.com/63464503/140642920-776730f9-b18a-4046-8d8c-9ece8419d96b.png)
 
 
 
@@ -35,7 +35,7 @@
 
 ### Registration Page: `/register`
 
-![image](https://user-images.githubusercontent.com/63464503/140637748-8436943d-38c2-4ed8-a3e4-4202b77bd2de.png)
+![image](https://user-images.githubusercontent.com/63464503/140642915-0ee60ded-2930-43ed-990c-bd9ad98a68b3.png)
 
 - sends POST request via the `axios` package
 
