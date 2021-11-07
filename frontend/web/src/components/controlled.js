@@ -14,19 +14,19 @@ import {
   
   } from '@chakra-ui/react';
 
-export default function ControlledInput({label, placeHolder, onChange, type}){
+export default function ControlledInput({h, variant, label, placeHolder, onChange, type}){
 
     return(
-        <FormControl isRequired>
-            <FormLabel textAlign="center">
-                {label}
-            </FormLabel>
+        <FormControl >
+            <FormLabel>{label}</FormLabel>
             <Input 
+                variant = {variant}
                 placeholder = {placeHolder}
+                variant = {variant}
                 onChange    = {onChange}
                 type        = {type}
-            />
-            <br/><br/>
+                h = {h}
+        /> <br/> <br/>
         </FormControl>
     )
 }

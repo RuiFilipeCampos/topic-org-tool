@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import {
   chakra,
@@ -10,7 +11,7 @@ import {
   Button,
   useDisclosure,
   VStack,
-  IconButton,
+  IconButton, Text, 
   CloseButton,
   InputGroup,
   InputLeftElement,
@@ -32,6 +33,7 @@ import { BsFillCameraVideoFill } from "react-icons/bs";
 
 
 
+import {MinusIcon, CalendarIcon, EmailIcon, SettingsIcon} from '@chakra-ui/icons'
 
 
 function SearchForm(){
@@ -101,14 +103,6 @@ function DashboardHeader(){
                 </Button>
                 <Button
                   w="full"
-                  variant="solid"
-                  colorScheme="brand"
-                  leftIcon={<AiOutlineInbox />}
-                >
-                  Inbox
-                </Button>
-                <Button
-                  w="full"
                   variant="ghost"
                   leftIcon={<BsFillCameraVideoFill />}
                 >
@@ -129,22 +123,20 @@ function DashboardHeader(){
           <HStack spacing={3} display="flex" alignItems="center">
             <HStack spacing={3} display={{ base: "none", md: "inline-flex" }}>
               <Button variant="ghost" leftIcon={<AiFillHome />} size="sm">
-                Dashboard
+                Home
               </Button>
-              <Button
-                variant="solid"
-                colorScheme="brand"
-                leftIcon={<AiOutlineInbox />}
-                size="sm"
-              >
-                Inbox
+              <Button variant="ghost" leftIcon={<CalendarIcon />} size="sm">
+                Calendar
+              </Button>
+              <Button variant="ghost" leftIcon={<EmailIcon />} size="sm">
+                E-Mail
               </Button>
               <Button
                 variant="ghost"
-                leftIcon={<BsFillCameraVideoFill />}
+                leftIcon={<SettingsIcon />}
                 size="sm"
               >
-                Videos
+                Settings
               </Button>
             </HStack>
             <chakra.a
@@ -175,7 +167,7 @@ function DashboardHeader(){
 
 function TheTabs(){
     return (
-        <Tabs defaultIndex={1} borderBottomColor="transparent">
+        <Tabs  defaultIndex={1} borderBottomColor="transparent">
           <TabList>
             <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
               Section 1
@@ -203,41 +195,116 @@ function TheTabs(){
 
 
 
+function MSpacer({n}){
 
+  let elements = []
+
+  for (let x = 0; x < n; x++){
+
+    elements.push(<Spacer/>)
+  };
+
+  return ( elements)
+}
+
+function Topic({title, desc}){
+
+  return ( <>
+   <Flex >
+    <Spacer/>
+      <Box 
+          borderWidth="10px"
+          shadow="2xl"
+          backgroundColor="white"
+          borderColor="transparent"
+          width="90%"
+          h="120px"
+      >
+          <Flex flexDirection="column">
+              <Flex flexDirection="row" as="a">
+                  <Text> <MinusIcon as="a" color="darkblue"/> </Text>  <Spacer/>
+                  <Text color="darkblue"> <b>{title} </b> </Text>
+                  <MSpacer n="99"/>
+              </Flex>
+              <MSpacer n="1" />
+              {desc}
+              <MSpacer n="900"/>
+              <HStack>
+                  <Box bg="black" width="3.5%" > . </Box>
+                  <Box bg="black" width="3.5%" > . </Box>
+                  <Box bg="black" width="3.5%" > . </Box>
+              </HStack>
+          </Flex>
+      </Box>
+    <Spacer/>
+  </Flex>
+  <br/> </>
+  )
+}
+
+
+
+var logged_in = true; 
 
 function Dashboard() {
+  let history = useHistory()
+
+  if (!logged_in){
+    history.push("/")
+  }
+
+  
   const bg = useColorModeValue("white", "gray.800");
 
+
+
+  document.body.style = 'background: AliceBlue;';
+
   return (
-    <>
-        <Box shadow="md">
-        <DashboardHeader />
-        <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            mx={2}
-            borderWidth={0}
-            overflowX="auto"
-        >
-            <TheTabs />
-            <Spacer />
-            <SearchForm />
-        </Flex>
+    <Box>
+
+        <Box shadow="md" bg="white">
+            <DashboardHeader />
+            <Flex bg="white"
+                alignItems="center"
+                justifyContent="space-between"
+                mx={2}
+                borderWidth={0}
+                overflowX="auto"
+            >
+                <TheTabs />
+                <Spacer />
+                <SearchForm />
+            </Flex>
         </Box>
-        <Box bg="gray.100" shadow="md">
-        <Flex
-            alignItems="center"
-            mx={0}
-            borderWidth={15}
-            borderColor="gray.100"
-            overflowX="auto"
-        >
-          <b>Description</b>:
-          <br/>
-           <p>This is where the description of the purpose of the section is meant to be. </p>
+        <Flex flexDirection="row" maxH="100%" >
+          <Box width="70%" maxH="100%" >
+            <Spacer/> <br/>
+            <Topic title = "New Topic" />
+            <Topic title = "Calendar" desc = "Threads organized into years, months and days." />
+            <Topic title = "Journal" desc = "A place to ocassionally collect my thoughts."/>
+            <Topic title = "Notes" desc="Just some random notes." />
+            <Topic title = "Notes" desc="Just some random notes." />
+            <Topic title = "Notes" desc="Just some random notes." />
+            <Topic title = "Notes" desc="Just some random notes." />
+            <Topic title = "Notes" desc="Just some random notes." />
+          </Box>
+          <Flex width="30%"     flexDirection="column">
+          <Spacer/>
+          <Box bg="white" shadow="inner" height="100%">
+            <Flex flexDirection="column">
+              <MSpacer n="50"/>
+              ads
+              <Spacer/>
+            </Flex>
+          </Box>
+          <Spacer/>
+
+          </Flex>
+
+
         </Flex>
-        </Box>
-    </>
+    </Box>
   );
 }
 

@@ -24,6 +24,7 @@ import { useHistory } from "react-router-dom";
 
 import CoolBox from "../components/coolbox"
 import ControlledInput from "../components/controlled"
+import {AddIcon, ArrowUpDownIcon} from '@chakra-ui/icons'
 
 
 function getCookie(name) {
@@ -49,9 +50,15 @@ function getCookie(name) {
   // axios.defaults.headers.post['Content-Type'] = "text/plain";
 
 
+var logged_in = false; 
 
 function Register() {
     let history = useHistory()
+
+
+    if (logged_in){
+        history.push("/dashboard")
+    };
 
     const [user,     setUser]     = useState('');
     const [email,    setEmail]    = useState('');
@@ -105,22 +112,26 @@ function Register() {
               <form onSubmit={handleSubmit}>
                   <ControlledInput 
                         label = "E-Mail"
-                        placeHolder = "your_email@domain.com"
                         onChange={event => setEmail(event.currentTarget.value)}
                   />
                  <ControlledInput 
                         label       = "Username"
-                        placeHolder = "a_cool_person"
                         onChange    = {event => setUser(event.currentTarget.value)}
                  />
                  <ControlledInput 
                         label       = "Password"
                         type        = "password" 
-                        placeHolder = "*******"
                         onChange    = {event => setPassword(event.currentTarget.value)}
                   />
                 <FormControl isRequired>
-                    <Button type="submit"  color="primary" textAlign="center"> 
+                    <Button 
+                        leftIcon={<AddIcon/>} 
+                        variant = "ghost" 
+                        type="submit"  
+                        color="primary" 
+                        textAlign="center"
+                        colorScheme="black"
+                    > 
                         Register
                     </Button>  
                 </FormControl>
