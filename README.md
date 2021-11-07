@@ -26,7 +26,7 @@
 
 ### Landing Page (also the login page): `/`
 
-![image](https://user-images.githubusercontent.com/63464503/140642356-c0d1d394-b75f-4d41-8210-072ab890f328.png)
+![image](https://user-images.githubusercontent.com/63464503/140642746-05ff647c-91a6-45c6-9ba2-b78153659d2d.png)
 
 
 
