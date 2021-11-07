@@ -1,4 +1,10 @@
 
+
+
+
+
+
+
 ##### login
 
 
@@ -13,7 +19,25 @@
 
 
 
-### state of project
+# State of the Project
+
+## The frontend
+
+
+### The landing page `/`
+
+![image](https://user-images.githubusercontent.com/63464503/140637734-514511a1-3c73-4e60-8ee2-ba367cc2a1b4.png)
+
+
+### The registration page `/register`
+
+![image](https://user-images.githubusercontent.com/63464503/140637748-8436943d-38c2-4ed8-a3e4-4202b77bd2de.png)
+
+### User dashboard `/dashboard`
+
+![image](https://user-images.githubusercontent.com/63464503/140637821-755cd50b-1cb7-4caf-bcaa-484bad16db81.png)
+
+
 
 #### the `user` app
 
