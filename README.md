@@ -41,7 +41,8 @@
 
 ### User Dashboard: `/dashboard`
 
-![image](https://user-images.githubusercontent.com/63464503/140637821-755cd50b-1cb7-4caf-bcaa-484bad16db81.png)
+![image](https://user-images.githubusercontent.com/63464503/140647570-89ef0aa3-3e59-4ed5-9ae6-10d1f0d45e90.png)
+
 
 
 ## Backend
