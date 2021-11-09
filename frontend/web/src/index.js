@@ -1,32 +1,80 @@
-
-import React, { StrictMode } from 'react';
-
-
+import React from 'react';
 import ReactDOM from 'react-dom';
-
 import App from './App';
-
-
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
-import {
-  ChakraProvider,
-} from '@chakra-ui/react';
-
+import { ChakraProvider,} from '@chakra-ui/react';
 import theme from './config/theme';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+
+import Login from './pages/login'
+import Register, {RegisterSuccess} from './pages/register'
+import Dashboard  from './pages/dashboard';
 
 ReactDOM.render(
-    <StrictMode>
-        <ChakraProvider 
-              theme = {theme}
-        >
-            <App />
+    <React.StrictMode>
+        <ChakraProvider heme = {theme}>
+            <Router>
+                <Switch>
+
+                    {/************************************
+                    *    The Dashboard page
+                    */}
+
+                    <Route path="/dashboard">
+                        <Dashboard />
+                    </Route>
+
+
+                    {/************************************
+                    *    The Register Success page
+                    */}
+
+                    <Route path="/register/success">
+                        <RegisterSuccess />
+                    </Route>
+
+
+
+
+                    {/************************************
+                    *    The Dashboard page
+                    */}
+                    <Route path="/register">
+                        <Register />
+                    </Route>
+                    
+
+
+
+                    {/************************************
+                    *    The Login page
+                    */}
+                    <Route path="/">
+                        <Login />
+                    </Route>
+
+
+                </Switch>
+            </Router>
         </ChakraProvider>
-    </StrictMode>
+    </React.StrictMode>
   ,
   document.getElementById('root')
 );
+
+
+
+
+
+
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
