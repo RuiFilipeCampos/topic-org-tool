@@ -18,7 +18,7 @@ import Dashboard  from './pages/dashboard';
 
 ReactDOM.render(
     <React.StrictMode>
-        <ChakraProvider heme = {theme}>
+        <ChakraProvider theme = {theme}>
             <Router>
                 <Switch>
 
