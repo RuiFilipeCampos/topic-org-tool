@@ -1,5 +1,9 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+
+
+import { 
+  useHistory 
+} from "react-router-dom";
 
 import {
   chakra,
@@ -11,7 +15,8 @@ import {
   Button,
   useDisclosure,
   VStack,
-  IconButton, Text, 
+  IconButton, 
+  Text, 
   CloseButton,
   InputGroup,
   InputLeftElement,
@@ -22,6 +27,9 @@ import {
   Tab,
   Spacer,
 } from "@chakra-ui/react";
+
+
+
 import {
   AiOutlineMenu,
   AiFillHome,
@@ -29,26 +37,29 @@ import {
   AiOutlineSearch,
   AiFillBell,
 } from "react-icons/ai";
-import { BsFillCameraVideoFill } from "react-icons/bs";
 
 
+import { 
+  BsFillCameraVideoFill 
+} from "react-icons/bs";
 
-import {MinusIcon, CalendarIcon, EmailIcon, SettingsIcon} from '@chakra-ui/icons'
+
+import {
+  MinusIcon, 
+  CalendarIcon, 
+  EmailIcon, 
+  SettingsIcon
+} from '@chakra-ui/icons'
+
+import SearchForm from "../components/search";
+import MSpacer from "../components/MSpacer";
+
+import {
+  Topic,
+  NewTopic,
+} from "../components/topics";
 
 
-function SearchForm(){
-    return (
-        <HStack spacing={3} alignItems="center">
-          <InputGroup display={{ base: "none", lg: "block" }} ml="auto">
-            <InputLeftElement
-              pointerEvents="none"
-              children={<AiOutlineSearch />}
-            />
-            <Input type="tel" placeholder="Search..." />
-          </InputGroup>
-        </HStack>
-    )
-}
 
 
 
@@ -168,26 +179,33 @@ function DashboardHeader(){
 function TheTabs(){
     return (
         <Tabs  defaultIndex={1} borderBottomColor="transparent">
-          <TabList>
-            <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-              Section 1
-            </Tab>
-            <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-             Section 2
-            </Tab>
-            <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-             Section 3
-            </Tab>
-            <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-             Section 4
-            </Tab>
-            <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-              Agenda
-            </Tab>{" "}
-            <Tab py={4} m={0}>
-              +
-            </Tab>
-          </TabList>
+            <TabList>
+
+                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
+                    Section 1
+                </Tab>
+
+                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
+                    Section 2
+                </Tab>
+
+                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
+                    Section 3
+                </Tab>
+
+                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
+                    Section 4
+                </Tab>
+
+                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
+                    Agenda
+                </Tab>{" "}
+
+                <Tab py={4} m={0}>
+                    +
+                </Tab>
+
+            </TabList>
         </Tabs>
     )
 
@@ -195,52 +213,9 @@ function TheTabs(){
 
 
 
-function MSpacer({n}){
 
-  let elements = []
 
-  for (let x = 0; x < n; x++){
 
-    elements.push(<Spacer/>)
-  };
-
-  return ( elements)
-}
-
-function Topic({title, desc}){
-
-  return ( <>
-   <Flex >
-    <Spacer/>
-      <Box 
-          borderWidth="10px"
-          shadow="2xl"
-          backgroundColor="white"
-          borderColor="transparent"
-          width="90%"
-          h="120px"
-      >
-          <Flex flexDirection="column">
-              <Flex flexDirection="row" as="a">
-                  <Text> <MinusIcon as="a" color="darkblue"/> </Text>  <Spacer/>
-                  <Text color="darkblue"> <b>{title} </b> </Text>
-                  <MSpacer n="99"/>
-              </Flex>
-              <MSpacer n="1" />
-              {desc}
-              <MSpacer n="900"/>
-              <HStack>
-                  <Box bg="black" width="3.5%" > . </Box>
-                  <Box bg="black" width="3.5%" > . </Box>
-                  <Box bg="black" width="3.5%" > . </Box>
-              </HStack>
-          </Flex>
-      </Box>
-    <Spacer/>
-  </Flex>
-  <br/> </>
-  )
-}
 
 
 
@@ -261,50 +236,47 @@ function Dashboard() {
   document.body.style = 'background: AliceBlue;';
 
   return (
-    <Box>
+            <Box>
+                <Box shadow="md" bg="white">
+                    <DashboardHeader />
+                    <Flex bg="white"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    mx={2}
+                    borderWidth={0}
+                    overflowX="auto"
+                    >
+                    <TheTabs />
+                    <Spacer />
+                    <SearchForm />
+                    </Flex>
+                </Box>
 
-        <Box shadow="md" bg="white">
-            <DashboardHeader />
-            <Flex bg="white"
-                alignItems="center"
-                justifyContent="space-between"
-                mx={2}
-                borderWidth={0}
-                overflowX="auto"
-            >
-                <TheTabs />
-                <Spacer />
-                <SearchForm />
-            </Flex>
-        </Box>
-        <Flex flexDirection="row" maxH="100%" >
-          <Box width="70%" maxH="100%" >
-            <Spacer/> <br/>
-            <Topic title = "New Topic" />
-            <Topic title = "Calendar" desc = "Threads organized into years, months and days." />
-            <Topic title = "Journal" desc = "A place to ocassionally collect my thoughts."/>
-            <Topic title = "Notes" desc="Just some random notes." />
-            <Topic title = "Notes" desc="Just some random notes." />
-            <Topic title = "Notes" desc="Just some random notes." />
-            <Topic title = "Notes" desc="Just some random notes." />
-            <Topic title = "Notes" desc="Just some random notes." />
-          </Box>
-          <Flex width="30%"     flexDirection="column">
-          <Spacer/>
-          <Box bg="white" shadow="inner" height="100%">
-            <Flex flexDirection="column">
-              <MSpacer n="50"/>
-              ads
-              <Spacer/>
-            </Flex>
-          </Box>
-          <Spacer/>
-
-          </Flex>
-
-
-        </Flex>
-    </Box>
+                <Flex flexDirection="row" maxH="100%" >
+                    <Box width="70%" maxH="100%" >
+                        <Spacer/> <br/>
+                        <NewTopic />
+                        <Topic title = "Calendar" desc = "Threads organized into years, months and days." />
+                        <Topic title = "Journal"  desc = "A place to ocassionally collect my thoughts."/>
+                        <Topic title = "Notes"    desc="Just some random notes." />
+                        <Topic title = "Notes"    desc="Just some random notes." />
+                        <Topic title = "Notes"    desc="Just some random notes." />
+                        <Topic title = "Notes"    desc="Just some random notes." />
+                        <Topic title = "Notes"    desc="Just some random notes." />
+                    </Box>
+                    <Flex width="30%"     flexDirection="column">
+                        <Spacer/>
+                        <Box bg="white" shadow="inner" height="100%">
+                            <Flex flexDirection="column">
+                                <MSpacer n="50"/>
+                                ads
+                                <Spacer/>
+                            </Flex>
+                        </Box>
+                        <Spacer/>
+                    </Flex>
+                </Flex>
+            </Box>
   );
 }
 
