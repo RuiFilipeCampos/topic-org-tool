@@ -1,6 +1,8 @@
 
 import React, {Component} from "react";
 
+import {TOPICS_TO_RENDER} from "./state"
+
 import ControlledInput from "./controlled";
 
 import {
@@ -22,10 +24,47 @@ import MSpacer from "./MSpacer";
 
 
 
+class TopicList{
+    constructor(){
+
+
+    }
+
+    render(){
+
+
+    }
+}
+
+
+// this.forceUpdate()
+
+class TopicPage extends Component{
+    constructor(...args){ super(...args)
+
+
+        this.topic_list = new TopicList()
+
+        
+
+    }
+
+
+
+    render(){
+        
+
+    }
+}
+
+
+
+
 
 export function Topic({title, desc}){
 
-    return ( <>
+    return ( 
+    <>
      <Flex >
       <Spacer/>
         <Box 
@@ -70,8 +109,6 @@ export function Topic({title, desc}){
 export class NewTopic extends Component{
     
 
-
-
     constructor(...args){
         super(...args)
 
@@ -90,11 +127,12 @@ export class NewTopic extends Component{
 
         var handle = () => this.toggle()
 
-        return ( <>
+        return ( 
+        <>
             <Flex >
              <Spacer/>
                <Box 
-                   borderWidth="5px"
+                   borderWidth="8px"
                    shadow="md"
                    backgroundColor="white"
                    borderColor="transparent"
@@ -103,11 +141,12 @@ export class NewTopic extends Component{
                    _hover={{ shadow:"xl" }}
                    onDoubleClick = {handle}
                >
-                   Double click to create a new topic...
+                   <i>Double click to create a new topic...</i>
                </Box>
              <Spacer/>
            </Flex>
-           <br/> </>
+           <br/> 
+        </>
            )
     }
 
@@ -117,7 +156,8 @@ export class NewTopic extends Component{
 
         var handle = () => this.toggle()
 
-        return ( <>
+        return ( 
+        <>
             <Flex >
              <Spacer/>
                <Box 
@@ -127,36 +167,32 @@ export class NewTopic extends Component{
                    borderColor="transparent"
                    width="90%"
                    h="auto"
-                   
                >
                    <Flex flexDirection="column">
-                   <Text onDoubleClick = {handle}> Double click to close...</Text>
-                   <br/>
-                   <form>
-                       <FormControl>
-                            <FormLabel>Title</FormLabel>
-                            <Input/>
-                       </FormControl>
+                        <Text onDoubleClick = {handle}> <i> Double click to close... </i> </Text>
                         <br/>
-                       <FormControl>
-                            <FormLabel>Description</FormLabel>
-                            <Input type="text" h="100px" />
-                       </FormControl> 
-                       <FormControl>
-                            <FormLabel>Description</FormLabel>
-                            <Input type="file"/>
-                       </FormControl>                      
-                       <FormControl>
-                            <FormLabel>Description</FormLabel>
-                            <Input type="color" />
-                       </FormControl>
-                   </form>
+                        <form>
+                            <FormControl>
+                                <Input placeholder="Title" ty />
+                            </FormControl>
+                                <br/>
+                            <FormControl>
+                                <FormLabel>Description</FormLabel>
+                                <Input type="text" h="200px" />
+                            </FormControl> 
+                            <Flex flexDirection="row" >
+                                <MSpacer n="2" />
+                                <Input type="button"   width="25%"/>
+                                <Input type="submit"   width="25%"/>
+                            </Flex>
+                        </form>
                    </Flex>
 
                </Box>
              <Spacer/>
            </Flex>
-           <br/> </>
+           <br/> 
+           </>
            )
     }
 
@@ -175,3 +211,56 @@ export class NewTopic extends Component{
 
   }
 
+
+export class TopicList extends Component{
+
+
+
+
+    constructor(...args){
+        super(...args)
+
+        this.current_topics = [
+            {
+                title:"Calendar",
+                description:"Threads organized into years, months and days.",
+            },
+
+            {
+                title:"Journal",
+                description:"A place for me to collect my thoughts",
+            },
+
+            {
+                title:"Notes",
+                description:"Just some random notes.",
+            },
+        ]
+    }
+
+    request_topic_list(){
+        // this guy connects with the django backend API
+
+        return this.current_topics
+        }
+
+
+    render(){
+
+        let elements = []
+        
+        for (let i = 0;i<TOPICS_TO_RENDER.length;++i){
+
+            elements.push(
+                <Topic
+                    title = {TOPICS_TO_RENDER[i].title}
+                    desc  = {TOPICS_TO_RENDER[i].description}
+                />
+            )
+        }
+
+        return elements
+
+
+    }
+}

@@ -14,6 +14,8 @@ import {
 } from "react-icons/ai";
 
 
+import {topic_search} from "./state"
+
 
 export default function SearchForm(){
     return (
@@ -26,6 +28,7 @@ export default function SearchForm(){
                 <Input 
                     type        = "tel" 
                     placeholder = "Search..." 
+                    onChange = {() => topic_search("a")}
                 />
             </InputGroup>
         </HStack>

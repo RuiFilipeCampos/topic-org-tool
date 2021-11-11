@@ -57,6 +57,7 @@ import MSpacer from "../components/MSpacer";
 import {
   Topic,
   NewTopic,
+  TopicList,
 } from "../components/topics";
 
 
@@ -256,21 +257,24 @@ function Dashboard() {
                     <Box width="70%" maxH="100%" >
                         <Spacer/> <br/>
                         <NewTopic />
-                        <Topic title = "Calendar" desc = "Threads organized into years, months and days." />
-                        <Topic title = "Journal"  desc = "A place to ocassionally collect my thoughts."/>
-                        <Topic title = "Notes"    desc="Just some random notes." />
-                        <Topic title = "Notes"    desc="Just some random notes." />
-                        <Topic title = "Notes"    desc="Just some random notes." />
-                        <Topic title = "Notes"    desc="Just some random notes." />
-                        <Topic title = "Notes"    desc="Just some random notes." />
+                        <TopicList />
                     </Box>
                     <Flex width="30%"     flexDirection="column">
                         <Spacer/>
-                        <Box bg="white" shadow="inner" height="100%">
+                        <Box bg="transparent"  height="20px">
                             <Flex flexDirection="column">
                                 <MSpacer n="50"/>
-                                ads
                                 <Spacer/>
+                            </Flex>
+                        </Box>
+                        <Box bg="white" borderWidth="15px" borderColor="transparent" shadow="md" height="500px">
+                            <Flex flexDirection="column">
+                                <MSpacer n="50"/>
+                                <SearchForm />
+                                <Text fontSize="xx-large">Agenda</Text>
+                        
+                                <Spacer/>
+                                <Text>This section groups all time related topics.</Text>
                             </Flex>
                         </Box>
                         <Spacer/>
