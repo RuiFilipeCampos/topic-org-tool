@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 
 
 import { 
@@ -222,67 +222,149 @@ function TheTabs(){
 
 var logged_in = true; 
 
-function Dashboard() {
-  let history = useHistory()
+export default class Dashboard extends Component{
 
-  if (!logged_in){
-    history.push("/")
+
+    constructor(...args){
+      super(...args)
+
+
+      this.sections = {
+        all : [
+          "Section 1",
+          "Section 2",
+          "Section 3",
+          "Agenda",
+        ],
+
+        to_render : [
+          "Section 1",
+          "Section 2",
+          "Section 3",
+          "Agenda",
+        ]
+      }
+
+      
+
+
+      
+
+    }
+
+
+
+    search_tabs = (word) => {
+      this.sections.to_render = []
+
+      for (let i = 0; i < this.sections.all.length; ++i){
+          if (this.sections.all[i].includes(word)){
+            this.sections.to_render.push(
+              this.sections.all[i]
+            )
+          }
+      }
+      this.forceUpdate()
+
+    }
+
+    search_tabs_form = () => {
+      return (
+          <HStack spacing={3} alignItems="center">
+              <InputGroup display={{ base: "none", lg: "block" }} ml="auto">
+                  <InputLeftElement
+                      pointerEvents = "none"
+                      children      = {<AiOutlineSearch />}
+                  />
+                  <Input 
+                      type        = "tel" 
+                      placeholder = "Search..." 
+                      onChange = {event => this.search_tabs(event.currentTarget.value)}
+                  />
+              </InputGroup>
+          </HStack>
+      ) 
+    }
+
+
+
+    tabs = () => {
+
+      let elements = []
+
+      for (let i = 0; i < this.sections.to_render.length; ++i){
+        elements.push(
+          <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
+              {this.sections.to_render[i]}
+          </Tab>
+        )
+      }
+
+      return (
+          <Tabs  defaultIndex={1} borderBottomColor="transparent">
+              <TabList>
+                  {elements}
+                  <Tab py={4} m={0}>
+                      +
+                  </Tab>
+              </TabList>
+          </Tabs>
+      )
+
   }
 
-  
-  const bg = useColorModeValue("white", "gray.800");
 
 
+  render() {
+      
 
-  document.body.style = 'background: AliceBlue;';
+      document.body.style = 'background: AliceBlue;';
 
-  return (
-            <Box>
-                <Box shadow="md" bg="white">
-                    <DashboardHeader />
-                    <Flex bg="white"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    mx={2}
-                    borderWidth={0}
-                    overflowX="auto"
-                    >
-                    <TheTabs />
-                    <Spacer />
-                    <SearchForm />
+      return (
+                <Box>
+                    <Box shadow="md" bg="white">
+                        <DashboardHeader />
+                        <Flex bg="white"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        mx={2}
+                        borderWidth={0}
+                        overflowX="auto"
+                        >
+                        <this.tabs />
+                        <Spacer />
+                        <this.search_tabs_form/>
+                        </Flex>
+                    </Box>
+
+                    <Flex flexDirection="row" maxH="100%" >
+                        <Box width="70%" maxH="100%" >
+                            <Spacer/> <br/>
+                            <NewTopic />
+                            <TopicList />
+                        </Box>
+                        <Flex width="30%"     flexDirection="column">
+                            <Spacer/>
+                            <Box bg="transparent"  height="20px">
+                                <Flex flexDirection="column">
+                                    <MSpacer n="50"/>
+                                    <Spacer/>
+                                </Flex>
+                            </Box>
+                            <Box bg="white" borderWidth="15px" borderColor="transparent" shadow="md" height="500px">
+                                <Flex flexDirection="column">
+                                    <MSpacer n="50"/>
+                                    <this.search_tabs_form />
+                                    <Text fontSize="xx-large">Agenda</Text>
+                            
+                                    <Spacer/>
+                                    <Text>This section groups all time related topics.</Text>
+                                </Flex>
+                            </Box>
+                            <Spacer/>
+                        </Flex>
                     </Flex>
                 </Box>
-
-                <Flex flexDirection="row" maxH="100%" >
-                    <Box width="70%" maxH="100%" >
-                        <Spacer/> <br/>
-                        <NewTopic />
-                        <TopicList />
-                    </Box>
-                    <Flex width="30%"     flexDirection="column">
-                        <Spacer/>
-                        <Box bg="transparent"  height="20px">
-                            <Flex flexDirection="column">
-                                <MSpacer n="50"/>
-                                <Spacer/>
-                            </Flex>
-                        </Box>
-                        <Box bg="white" borderWidth="15px" borderColor="transparent" shadow="md" height="500px">
-                            <Flex flexDirection="column">
-                                <MSpacer n="50"/>
-                                <SearchForm />
-                                <Text fontSize="xx-large">Agenda</Text>
-                        
-                                <Spacer/>
-                                <Text>This section groups all time related topics.</Text>
-                            </Flex>
-                        </Box>
-                        <Spacer/>
-                    </Flex>
-                </Flex>
-            </Box>
-  );
+      );
+    }
 }
-
-
-export default Dashboard

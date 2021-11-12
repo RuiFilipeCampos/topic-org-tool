@@ -7,6 +7,7 @@ import ControlledInput from "./controlled";
 
 import {
   Box,
+  ChakraProvider,
   Flex,
   HStack,
   Spacer,
@@ -24,38 +25,9 @@ import MSpacer from "./MSpacer";
 
 
 
-class TopicList{
-    constructor(){
-
-
-    }
-
-    render(){
-
-
-    }
-}
-
-
-// this.forceUpdate()
-
-class TopicPage extends Component{
-    constructor(...args){ super(...args)
-
-
-        this.topic_list = new TopicList()
-
-        
-
-    }
 
 
 
-    render(){
-        
-
-    }
-}
 
 
 

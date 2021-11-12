@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from "react";
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
@@ -15,59 +15,62 @@ import {
 import Login from './pages/login'
 import Register, {RegisterSuccess} from './pages/register'
 import Dashboard  from './pages/dashboard';
+import { jsx } from '@emotion/react';
+
+
+
+
+class App extends Component{
+
+    constructor(...args){
+        super(...args)
+        
+
+        // Configuration.
+        this.pages = [
+            { component : <Dashboard />,      route : "/dashboard" },
+            { component : <RegisterSuccess/>, route : "/register/success" },
+            { component : <Register />,       route : "/register" },
+            { component : <Login />,          route : "/"}
+        ]
+
+
+        // Initialization.
+        this.jsx = []
+        
+        for (let i = 0; i < this.pages.length; ++i){
+            this.jsx.push(
+                <Route path = {this.pages[i].route}>
+                    {this.pages[i].component}
+                </Route>
+            )
+        }
+
+    }
+
+
+
+    render(){
+        return(
+            <ChakraProvider theme={theme}>
+                <Router>
+                    <Switch>
+                        {this.jsx}
+                    </Switch>
+                </Router>
+            </ChakraProvider>
+        )
+    }
+}
+
+
 
 ReactDOM.render(
     <React.StrictMode>
-        <ChakraProvider theme = {theme}>
-            <Router>
-                <Switch>
-
-                    {/************************************
-                    *    The Dashboard page
-                    */}
-
-                    <Route path="/dashboard">
-                        <Dashboard />
-                    </Route>
-
-
-                    {/************************************
-                    *    The Register Success page
-                    */}
-
-                    <Route path="/register/success">
-                        <RegisterSuccess />
-                    </Route>
-
-
-
-
-                    {/************************************
-                    *    The Dashboard page
-                    */}
-                    <Route path="/register">
-                        <Register />
-                    </Route>
-                    
-
-
-
-                    {/************************************
-                    *    The Login page
-                    */}
-                    <Route path="/">
-                        <Login />
-                    </Route>
-
-
-                </Switch>
-            </Router>
-        </ChakraProvider>
-    </React.StrictMode>
-  ,
+        <App />
+    </React.StrictMode>,
   document.getElementById('root')
 );
-
 
 
 
