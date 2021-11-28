@@ -21,19 +21,17 @@ import { jsx } from '@emotion/react';
 
 
 class App extends Component{
-
     constructor(...args){
         super(...args)
-        
 
         // Configuration.
-        this.pages = [
-            { component : <Dashboard />,      route : "/dashboard" },
-            { component : <RegisterSuccess/>, route : "/register/success" },
-            { component : <Register />,       route : "/register" },
-            { component : <Login />,          route : "/"}
+        this.pages = 
+        [
+            { component: <Dashboard />,      route: "/dashboard" },
+            { component: <RegisterSuccess/>, route: "/register/success" },
+            { component: <Register />,       route: "/register" },
+            { component: <Login />,          route: "/"}
         ]
-
 
         // Initialization.
         this.jsx = []

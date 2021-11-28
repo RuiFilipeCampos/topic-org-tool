@@ -221,12 +221,12 @@ export class TopicList extends Component{
 
         let elements = []
         
-        for (let i = 0;i<TOPICS_TO_RENDER.length;++i){
+        for (let i = 0;i<this.props.list.length;++i){
 
             elements.push(
                 <Topic
-                    title = {TOPICS_TO_RENDER[i].title}
-                    desc  = {TOPICS_TO_RENDER[i].description}
+                    title = {this.props.list[i].title}
+                    desc  = {this.props.list[i].description}
                 />
             )
         }

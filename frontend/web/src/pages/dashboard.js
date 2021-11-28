@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import {db} from "../settings"
 
 import { 
   useHistory 
@@ -59,6 +60,7 @@ import {
   NewTopic,
   TopicList,
 } from "../components/topics";
+import { current_section } from "../components/state";
 
 
 
@@ -173,104 +175,92 @@ function DashboardHeader(){
 }
 
 
+class SectionTab extends Component{
+  constructor(props){
+    super(props)
+  }
 
-
-
-
-function TheTabs(){
-    return (
-        <Tabs  defaultIndex={1} borderBottomColor="transparent">
-            <TabList>
-
-                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-                    Section 1
-                </Tab>
-
-                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-                    Section 2
-                </Tab>
-
-                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-                    Section 3
-                </Tab>
-
-                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-                    Section 4
-                </Tab>
-
-                <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-                    Agenda
-                </Tab>{" "}
-
-                <Tab py={4} m={0}>
-                    +
-                </Tab>
-
-            </TabList>
-        </Tabs>
+  handleClick = () => {
+    this.props.upper.change_section(
+      this.props.id
     )
+  }
 
+  render = () => {return(
+    <Tab 
+      py={4} 
+      m={0} 
+      _focus = {{ boxShadow: "none" }} 
+      onClick = {() => this.handleClick()} 
+    >
+    {this.props.name}
+  </Tab>
+  )}
 }
 
 
 
+/**
+ * @brief THe sections menu.
+ */
+class Sections extends Component{
+  constructor(props){
+    super(props)
 
 
 
+    this.jsx = [];
+    for (let i = 0; i < this.props.sections.length; ++i){
+        this.jsx.push(
+          <SectionTab 
+            id = {i} 
+            name={this.props.sections[i]} 
+            upper = {this.props.upper}
+          />
+        )
+    }
+  }
 
+  re_render = (word) => {
+    this.jsx = [];
 
+    for (let i = 0; i < this.sections.length; ++i)
+    {
+        if (!(this.sections[i].includes(word)))
+          continue;
 
-var logged_in = true; 
-
-export default class Dashboard extends Component{
-
-
-    constructor(...args){
-      super(...args)
-
-
-      this.sections = {
-        all : [
-          "Section 1",
-          "Section 2",
-          "Section 3",
-          "Agenda",
-        ],
-
-        to_render : [
-          "Section 1",
-          "Section 2",
-          "Section 3",
-          "Agenda",
-        ]
-      }
-
-      
-
-
-      
-
+          this.jsx.push(
+            <SectionTab 
+              id = {i} 
+              name={this.sections[i]} 
+              upper = {this.props.upper}
+            />
+          )
     }
 
+    this.forceUpdate()
+  }
 
+  tabs = () => {
+    return (
+      <Tabs 
+        defaultIndex = {0} 
+        borderBottomColor = "transparent"
+      >
+          <TabList>
+              {this.jsx}
+              <Tab py={4} m={0}>
+                  +
+              </Tab>
+          </TabList>
+      </Tabs>
+    )
+  }
 
-    search_tabs = (word) => {
-      this.sections.to_render = []
-
-      for (let i = 0; i < this.sections.all.length; ++i){
-          if (this.sections.all[i].includes(word)){
-            this.sections.to_render.push(
-              this.sections.all[i]
-            )
-          }
-      }
-      this.forceUpdate()
-
-    }
-
-    search_tabs_form = () => {
-      return (
-          <HStack spacing={3} alignItems="center">
+  render = () => { return ( <>
+      <this.tabs/>
+      <Spacer />
+      <HStack spacing={3} alignItems="center">
               <InputGroup display={{ base: "none", lg: "block" }} ml="auto">
                   <InputLeftElement
                       pointerEvents = "none"
@@ -279,92 +269,395 @@ export default class Dashboard extends Component{
                   <Input 
                       type        = "tel" 
                       placeholder = "Search..." 
-                      onChange = {event => this.search_tabs(event.currentTarget.value)}
+                      onChange = {event => this.re_render(event.currentTarget.value)}
                   />
               </InputGroup>
-          </HStack>
-      ) 
+        </HStack>
+  </>)}
+
+}
+
+
+
+class SectionSideBar extends Component{
+  constructor(props){
+    super(props)
+  }
+
+  re_render = (word) => {
+    this.props.upper.filter_topics(word)
+  }
+
+  render(){
+    let section_data = this.props.data
+    
+    return(<>
+      <Box bg="transparent"  height="20px">
+          <Flex flexDirection="column">
+              <MSpacer n="50"/>
+              <Spacer/>
+          </Flex>
+      </Box>
+      <Box bg="white" borderWidth="15px" borderColor="transparent" shadow="md" height="500px">
+          <Flex flexDirection="column">
+              <MSpacer n="50"/>
+              <HStack spacing={3} alignItems="center">
+                <InputGroup display={{ base: "none", lg: "block" }} ml="auto">
+                  <InputLeftElement
+                      pointerEvents = "none"
+                      children      = {<AiOutlineSearch />}
+                  />
+                  <Input 
+                      type        = "tel" 
+                      placeholder = "Search..." 
+                      onChange = {event => this.re_render(event.currentTarget.value)}
+                  />
+                </InputGroup>
+              </HStack>
+              <Text fontSize="xx-large">{section_data.title}</Text>
+              <Spacer/>
+              <Text>{section_data.description}</Text>
+          </Flex>
+      </Box>
+      <Spacer/>
+    </>)
+
+  }
+}
+
+
+
+class Section extends Component{
+  constructor(...args){
+    super(...args)
+
+    this.state = db.get_section(this.props.id)
+    
+  }
+
+
+  filter_topics = (word) => {
+    if (word == ""){
+      this.setState(db.get_section(this.props.id))
+      return;
+    }
+
+
+    let new_topics = []
+    this.state.topics.forEach(element => {
+      if (element.title.includes(word)){
+        new_topics.push(element)
+      }
+    });
+
+
+    this.setState({
+      topics: new_topics,
+    })
+
+    this.forceUpdate()
+  }
+
+  
+
+  render() {
+    return(<>
+      <Box width="70%" maxH="100%" >
+        <Spacer/> <br/>
+        <NewTopic id = {this.props.id}/>
+        <TopicList list = {this.state.topics}/>
+      </Box>
+      <Flex width="30%"     flexDirection="column">
+        <SectionSideBar 
+          data  = {this.state} 
+          upper = {this.props.upper}
+        />
+      </Flex>
+    </>)
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+var logged_in = true; 
+export default class Dashboard extends Component{
+    constructor(props){
+      super(props)
+
+      this.state = {
+        section_list:db.get_section_list(),
+        current_section:db.get_section(0),
+      }
+    }
+
+    render() {
+      document.body.style = 'background: AliceBlue;';
+
+      return (
+        <Box>
+            <Box shadow="md" bg="white">
+                <DashboardHeader />
+                <Flex bg="white"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mx={2}
+                  borderWidth={0}
+                  overflowX="auto"
+                >
+                  <this.tabs/>
+                  <Spacer />
+                  <this.search_section_list_form />
+                </Flex>
+            </Box>
+            <Flex flexDirection="row" maxH="100%" >
+              <this.section />
+            </Flex>
+        </Box>
+      );
     }
 
 
 
+
+    /**
+     * @SUB_COMPONENT
+     * 
+     */
+
+    search_section_list_form = () => {
+      return (
+        <HStack spacing={3} alignItems="center">
+        <InputGroup display={{ base: "none", lg: "block" }} ml="auto">
+          <InputLeftElement
+              pointerEvents = "none"
+              children      = {<AiOutlineSearch />}
+          />
+          <Input 
+              type        = "tel" 
+              placeholder = "Search..." 
+              onChange = {event => this.filter_section_list(event)}
+          />
+        </InputGroup>
+      </HStack>
+      )
+    }
+
+    filter_section_list = (event)=>{
+      this.setState({
+        section_list:db.get_section_list(
+          event.currentTarget.value
+        ),
+      })
+    }
+
+
+
+    /**
+     * @SUB_COMPONENT
+     * 
+     */
     tabs = () => {
-
-      let elements = []
-
-      for (let i = 0; i < this.sections.to_render.length; ++i){
-        elements.push(
-          <Tab py={4} m={0} _focus={{ boxShadow: "none" }}>
-              {this.sections.to_render[i]}
+      let JSX = []
+      this.state.section_list.forEach(section_title => {
+        JSX.push(
+          <Tab py={4}  m={0}  _focus = {{ boxShadow: "none" }} 
+          onClick = {() => this.clicked_section(section_title)} 
+          >
+            {section_title}
           </Tab>
         )
-      }
+      });
 
-      return (
-          <Tabs  defaultIndex={1} borderBottomColor="transparent">
-              <TabList>
-                  {elements}
-                  <Tab py={4} m={0}>
-                      +
-                  </Tab>
-              </TabList>
-          </Tabs>
+      return(
+        <Tabs 
+          defaultIndex = {0} 
+          borderBottomColor = "transparent"
+        >
+            <TabList>
+                {JSX}
+                <Tab py={4} m={0}>
+                    +
+                </Tab>
+            </TabList>
+        </Tabs>
       )
+    }
+  
+    clicked_section = (section_title) => {
+      this.setState({
+        current_section:db.get_section_by_name(section_title)
+      })
 
+    }
+
+
+  /**
+   * @SUB_COMPONENT
+   * 
+   */
+  section = () => {
+    return(
+      <>
+        <Box width="70%" maxH="100%" >
+          <Spacer/> <br/>
+          <NewTopic id = {0}/>
+          <this.topic_list />
+        </Box>
+        <Flex width="30%"     flexDirection="column">
+          <this.sidebar/>
+        </Flex>
+      </>
+    )
+  }
+
+
+  sidebar = () => {
+    
+    return(
+    <>
+      <Box bg="transparent"  height="20px">
+          <Flex flexDirection="column">
+              <MSpacer n="50"/>
+              <Spacer/>
+          </Flex>
+      </Box>
+      <Box bg="white" borderWidth="15px" borderColor="transparent" shadow="md" height="500px">
+          <Flex flexDirection="column">
+              <MSpacer n="50"/>
+              <this.topic_search_form />
+              <Text fontSize="xx-large">{this.state.current_section.title}</Text>
+              <Spacer/>
+              <Text>{this.state.current_section.description}</Text>
+          </Flex>
+      </Box>
+      <Spacer/>
+    </>
+    )
+  }
+
+  topic_search_form = () => {
+    return(
+      <HStack spacing={3} alignItems="center">
+      <InputGroup display={{ base: "none", lg: "block" }} ml="auto">
+        <InputLeftElement
+            pointerEvents = "none"
+            children      = {<AiOutlineSearch />}
+        />
+        <Input 
+            type        = "tel" 
+            placeholder = "Search..." 
+            onChange = {event => this.filter_topics(event.currentTarget.value)}
+        /
+      </InputGroup>
+    </HStack>
+    )
+
+  }
+
+  filter_topics = (word) => {
+    this.setState({
+      current_section:{
+        id:this.state.current_section.id,
+        title:this.state.current_section.title,
+        topics:db.get_filtered_topics(word, this.state.current_section.id)
+      }
+    })
   }
 
 
 
-  render() {
-      
 
-      document.body.style = 'background: AliceBlue;';
 
-      return (
-                <Box>
-                    <Box shadow="md" bg="white">
-                        <DashboardHeader />
-                        <Flex bg="white"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        mx={2}
-                        borderWidth={0}
-                        overflowX="auto"
-                        >
-                        <this.tabs />
-                        <Spacer />
-                        <this.search_tabs_form/>
-                        </Flex>
-                    </Box>
 
-                    <Flex flexDirection="row" maxH="100%" >
-                        <Box width="70%" maxH="100%" >
-                            <Spacer/> <br/>
-                            <NewTopic />
-                            <TopicList />
-                        </Box>
-                        <Flex width="30%"     flexDirection="column">
-                            <Spacer/>
-                            <Box bg="transparent"  height="20px">
-                                <Flex flexDirection="column">
-                                    <MSpacer n="50"/>
-                                    <Spacer/>
-                                </Flex>
-                            </Box>
-                            <Box bg="white" borderWidth="15px" borderColor="transparent" shadow="md" height="500px">
-                                <Flex flexDirection="column">
-                                    <MSpacer n="50"/>
-                                    <this.search_tabs_form />
-                                    <Text fontSize="xx-large">Agenda</Text>
-                            
-                                    <Spacer/>
-                                    <Text>This section groups all time related topics.</Text>
-                                </Flex>
-                            </Box>
-                            <Spacer/>
-                        </Flex>
-                    </Flex>
-                </Box>
-      );
+
+
+
+
+
+
+  topic_list = () => {
+    let elements = []
+    let n_topics = this.state.current_section.topics.length
+    let topic_list = this.state.current_section.topics
+    for (let i = 0; i < n_topics; ++i){
+        elements.push(
+            <this.topic
+                title = {topic_list[i].title}
+                desc  = {topic_list[i].description}
+            />
+        )
     }
+
+    return elements
+  }
+  
+ 
+
+  topic = ({title, desc}) => {
+    return ( 
+      <>
+      <Flex >
+        <Spacer/>
+          <Box 
+              borderWidth="10px"
+              shadow="2xl"
+              backgroundColor="white"
+              borderColor="transparent"
+              width="90%"
+              h="120px"
+              shadow="md"
+              _hover={{ shadow:"xl" }}
+          >
+              <Flex flexDirection="column">
+                  <Flex flexDirection="row" as="a">
+                      <Text> <MinusIcon as="a" color="darkblue"/> </Text>  <Spacer/>
+                      <Text color="darkblue"> <b>{title} </b> </Text>
+                      <MSpacer n="99"/>
+                  </Flex>
+                  <MSpacer n="1" />
+                  {desc}
+                  <MSpacer n="900"/>
+                  <HStack>
+                      <Box bg="black" width="3.5%" > . </Box>
+                      <Box bg="black" width="3.5%" > . </Box>
+                      <Box bg="black" width="3.5%" > . </Box>
+                  </HStack>
+              </Flex>
+          </Box>
+        <Spacer/>
+      </Flex>
+      <br/> </>
+    )
+  }
+
 }
+
