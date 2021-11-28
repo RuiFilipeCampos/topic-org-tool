@@ -576,7 +576,7 @@ export default class Dashboard extends Component{
             type        = "tel" 
             placeholder = "Search..." 
             onChange = {event => this.filter_topics(event.currentTarget.value)}
-        /
+        />
       </InputGroup>
     </HStack>
     )
