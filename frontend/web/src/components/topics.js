@@ -12,6 +12,8 @@ import {
   HStack,
   Spacer,
   Text, 
+  Button,
+  Textarea,
 } from "@chakra-ui/react";
 import { FormControl } from "@chakra-ui/form-control";
 import { FormLabel } from "@chakra-ui/form-control";
@@ -134,28 +136,36 @@ export class NewTopic extends Component{
              <Spacer/>
                <Box 
                    borderWidth="5px"
-                   shadow="dark-lg"
+                   shadow="2xl"
                    backgroundColor="white"
                    borderColor="transparent"
                    width="90%"
                    h="auto"
+                   margin="3"
+                   borderRadius="md"
                >
-                   <Flex flexDirection="column">
+                   <Flex flexDirection="column" margin="3">
                         <Text onDoubleClick = {handle}> <i> Double click to close... </i> </Text>
                         <br/>
                         <form>
                             <FormControl>
-                                <Input placeholder="Title" ty />
+                                <Input placeholder="Title" ty marginBottom="3"/>
                             </FormControl>
-                                <br/>
                             <FormControl>
                                 <FormLabel>Description</FormLabel>
-                                <Input type="text" h="200px" />
+                                <Textarea 
+                                    placeholder="Text" 
+                                    fontSize="lg"
+                                    height="sm" 
+                                    size="sm" 
+                                    resize="none"
+                                >
+                                </Textarea>
                             </FormControl> 
-                            <Flex flexDirection="row" >
-                                <MSpacer n="2" />
-                                <Input type="button"   width="25%"/>
-                                <Input type="submit"   width="25%"/>
+                            <Flex flexDirection="row" margin="5">
+                                <MSpacer n="1"/>
+                                <Button type="button" width="20%" marginRight="5" bg="gray.300" _hover="gray.500">Cancel</Button>
+                                <Button type="submit" width="20%" colorScheme="blue">Submit</Button>
                             </Flex>
                         </form>
                    </Flex>

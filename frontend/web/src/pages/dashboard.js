@@ -136,7 +136,7 @@ function DashboardHeader(){
           </HStack>
           <HStack spacing={3} display="flex" alignItems="center">
             <HStack spacing={3} display={{ base: "none", md: "inline-flex" }}>
-              <Button variant="ghost" leftIcon={<AiFillHome />} size="sm">
+              <Button leftIcon={<AiFillHome />} size="sm" colorScheme='blue'>
                 Home
               </Button>
               <Button variant="ghost" leftIcon={<CalendarIcon />} size="sm">
@@ -154,10 +154,10 @@ function DashboardHeader(){
               </Button>
             </HStack>
             <chakra.a
-              p={3}
+              p={4}
               color={useColorModeValue("gray.800", "inherit")}
-              rounded="sm"
-              _hover={{ color: useColorModeValue("gray.800", "gray.600") }}
+              rounded="md"
+              _hover={{ color: useColorModeValue("gray.500", "gray.600") }}
             >
               <AiFillBell />
               <VisuallyHidden>Notifications</VisuallyHidden>
@@ -387,27 +387,6 @@ class Section extends Component{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
 var logged_in = true; 
 export default class Dashboard extends Component{
     constructor(props){
@@ -426,7 +405,8 @@ export default class Dashboard extends Component{
         <Box>
             <Box shadow="md" bg="white">
                 <DashboardHeader />
-                <Flex bg="white"
+                <Flex 
+                  
                   alignItems="center"
                   justifyContent="space-between"
                   mx={2}
