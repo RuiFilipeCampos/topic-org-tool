@@ -164,7 +164,7 @@ export class NewTopic extends Component{
                             </FormControl> 
                             <Flex flexDirection="row" margin="5">
                                 <MSpacer n="1"/>
-                                <Button type="button" width="20%" marginRight="5" bg="gray.300" _hover="gray.500">Cancel</Button>
+                                <Button type="button" width="20%" marginRight="5" bg="gray.300" onClick = {handle}>Cancel</Button>
                                 <Button type="submit" width="20%" colorScheme="blue">Submit</Button>
                             </Flex>
                         </form>

@@ -125,12 +125,11 @@ function Register() {
                   />
                 <FormControl isRequired>
                     <Button 
-                        leftIcon={<AddIcon/>} 
-                        variant = "ghost" 
+                        leftIcon={<AddIcon/>}
                         type="submit"  
                         color="primary" 
                         textAlign="center"
-                        colorScheme="black"
+                        colorScheme="blue"
                     > 
                         Register
                     </Button>  

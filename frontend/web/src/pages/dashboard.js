@@ -615,12 +615,11 @@ export default class Dashboard extends Component{
               width="90%"
               h="120px"
               shadow="md"
-              _hover={{ shadow:"xl" }}
+              _hover={{ shadow:"2xl" }}
           >
               <Flex flexDirection="column">
                   <Flex flexDirection="row" as="a">
-                      <Text> <MinusIcon as="a" color="darkblue"/> </Text>  <Spacer/>
-                      <Text color="darkblue"> <b>{title} </b> </Text>
+                      <Text color="black"> <b>{title}</b> </Text>
                       <MSpacer n="99"/>
                   </Flex>
                   <MSpacer n="1" />

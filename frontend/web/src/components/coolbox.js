@@ -9,7 +9,7 @@ export default function CoolBox(props){
         <Box 
             textAlign    = "center" 
             fontSize     = "xl"
-            boxShadow    = "dark-lg"
+            boxShadow    = "2xl"
             p            ="10"
             rounded      = "md"
             outline      = "a" 
