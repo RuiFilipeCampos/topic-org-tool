@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {
-  Text, Link, Center,
-  Input, Button, Box, Flex,
-VStack, Spacer, Divider,
-  // form stuff
-  FormControl, FormLabel,
-  FormErrorMessage, FormHelperText,
+    Text, Link, Center,
+    Input, Button, Box, Flex,
+    VStack, Spacer, Divider,
+    // form stuff
+    FormControl, FormLabel,
+    FormErrorMessage, FormHelperText,
 } from '@chakra-ui/react';
 
 import { useHistory } from "react-router-dom";
@@ -83,22 +83,11 @@ function Login() {
     const base_height = -10
 
     return (
-      <>          
-      <Center h="200">
-
-        <Text>A clean place to <b>think</b>, <i>plan</i> and <u>execute</u>...</Text>
-      </Center>
-
       <VStack>
-      <Center h={ (base_height).toString() }>
-        <Text> 
-            <b> Login </b> | <Link href="register"><u>Register</u></Link>
-        </Text>
-      </Center>
-      <Center h={ (base_height - 150).toString() }> 
+      <Center> 
           <CoolBox>
-              <h1>Login to <b>TOPIC-ORG</b>...</h1>
-              <br/> <br/>
+              <Text fontWeight="bold" fontSize="3xl">Login</Text>
+              <br/>
               <form onSubmit={handleSubmit}>
                   <Flex flexDirection="column">  
                   <ControlledInput 
@@ -114,15 +103,15 @@ function Login() {
                   /> 
                   </Flex>
                   <FormControl >
-                      <Button leftIcon={<UnlockIcon/>} variant = "ghost" colorScheme="black"  type="submit" textAlign="center"> 
+                      <Button leftIcon={<UnlockIcon/>} colorScheme="blue"  type="submit" textAlign="center"> 
                           Login
                       </Button>  
                   </FormControl>
+                  <Link fontSize="md" href="register">Don't have an account?</Link>
               </form>
           </CoolBox>
       </Center>
       </VStack>
-      </>
     );
   }
 
