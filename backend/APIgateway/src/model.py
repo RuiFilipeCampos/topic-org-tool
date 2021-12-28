@@ -21,7 +21,7 @@ class DB:
     def get(cls, username):
         
         x = cls.execute(
-            f"SELECT * FROM users WHERE users.name = {username}"
+            f"SELECT * FROM users WHERE username = {username}"
             )
         
         return cls(x.user, x.password, x.id)
