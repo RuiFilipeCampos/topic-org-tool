@@ -1,7 +1,6 @@
 import sqlite3
 from settings import MODULE_PATH
 
-
 db_file_path = str(MODULE_PATH/".db")
 
 class User:

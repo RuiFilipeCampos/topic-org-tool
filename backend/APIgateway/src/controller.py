@@ -1,9 +1,14 @@
-from settings import PRIVATE_KEY, SERVER_KEY, JWT_KEY
+# Internal Imports
+from settings import PRIVATE_KEY
+from settings import SERVER_KEY
+from settings import JWT_KEY
 import model
-import jwt
 
+# External Imports
+import jwt
 from cryptography.fernet import Fernet
 
+# Encryption utilities 
 def server_encrypt(key, raw_password):
     fernet = Fernet(key)
     return fernet.encrypt(raw_password.encode())
@@ -15,13 +20,19 @@ def server_decrypt(key, encrypted_pass):
 def ssh_decrypt(key, encrypted_password):
     return encrypted_password
 
-def auth(username, password):
-    user_data = model.User.get(username)
+
+# The controllers
+def auth(username:str, password:str):
+    """ Authenticate the user. 
+    Returns a JWT on success and None on failure.
+    """
+    user_data:dict = model.User.get(username)
+
     if user_data["status"] is None:
         del user_data
         return None
 
-    pass_from_db = server_decrypt(
+    pass_from_db:str = server_decrypt(
         SERVER_KEY, 
         user_data["password"]
     )
@@ -33,14 +44,14 @@ def auth(username, password):
             algorithm="HS256"
         )
 
-    del user_data 
     return None
 
-
 def new_user(username, password) -> bool:
-    user_data = model.User.get(username)
+    """ Create a new user. """
+
+    user_data:dict = model.User.get(username)
+
     if user_data["status"] is not None:
-        del user_data
         return False
     
     model.User.new(
@@ -50,4 +61,5 @@ def new_user(username, password) -> bool:
             ssh_decrypt(PRIVATE_KEY, password)
         )
     )
+    
     return True
