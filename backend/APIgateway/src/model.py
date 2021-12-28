@@ -1,6 +1,5 @@
 
-
-class DB:
+class User:
     connected = False
 
     @classmethod
@@ -19,21 +18,25 @@ class DB:
 
     @classmethod
     def get(cls, username):
-        
-        x = cls.execute(
+
+        entries = cls.execute(
             f"SELECT * FROM users WHERE username = {username}"
-            )
+        )
+
+        number_of_entries = len(entries)
+
+        if number_of_entries == 0:
+            return dict(status = None)
         
-        return cls(x.user, x.password, x.id)
+        if number_of_entries == 1:
+            return dict(
+                username = x.user, 
+                password = x.password, 
+                id = x.id,
+                status = 1,
+            )
 
+        raise RuntimeError("Two users have the same username!")
 
-class User(DB):
-    def __init__(self, id, username, password):
-        self.name = username
-        self.password = password
-        self.id = id
-
-    def __repr__(self):
-        return "<User#{self.id} name:{self.name}>"
 
 

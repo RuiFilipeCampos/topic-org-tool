@@ -22,24 +22,8 @@ class Login(Dispatch):
 
     @classmethod
     def post(cls):
-        try:
-            payload = request.get_json()
-            status, jwt_token = cntrl.auth\
-                (**payload)
-            
-            return dict(
-                    status = status,
-                    jwt = jwt_token,
-                    )
-
-        except LoginError:
-            return dict(status = 400)
-
-        except KeyError:
-            return dict(
-                status = 400,
-                error = "Invalid JSON."
-                )
+        pass
+ 
 
 class Register(Dispatch):
     @classmethod
@@ -47,17 +31,19 @@ class Register(Dispatch):
         pass
 
     @classmethod
-    def post(cls):
-        try:
-            status = cntrl.new_user\
-                (**request.get_json())
-            return dict(status = status)
+    def post(cls) -> dict:
+        payload:dict = request.json()
+        username = payload.get("username", None)
+        password = payload.get("password", None)
 
-        except KeyError:
-            return dict(
-                status = 400,
-                error = "Invalid JSON."
-                )
+        if username is None or password is None:
+            return dict(status=400, msg="Invalid JSON.")
+        
+        if cntrl.new_user(username, password):
+            return dict(status=200, msg="A-Okay")
+        
+        return dict(status=400, msg="Something went wrong.")
+
 
 class Routes:
     @app.route("/login", methods = ["POST", "OPTIONS"])
