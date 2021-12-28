@@ -1,15 +1,19 @@
 import sqlite3
 from settings import MODULE_PATH
 
+
 db_file_path = str(MODULE_PATH/".db")
 
 class User:
     @classmethod   
-    def exec(cls, command):
+    def exec(cls, *args):
         connection = sqlite3.connect(db_file_path)
         cursor = connection.cursor()
         
-        cursor.execute(command)
+        cursor.execute(
+            args[0],
+            args[1]
+        )
         result = cursor.fetchall()
         
         connection.commit()
@@ -22,8 +26,9 @@ class User:
         INSERT INTO users
             (username, password)
         VALUES
-            ('{username}', '{password}');
-        """)
+            (?, ?);
+        """,
+        [username, password])
 
     @classmethod
     def get(cls, username):
@@ -33,8 +38,8 @@ class User:
             FROM 
                 users 
             WHERE 
-                username = '{username}'
-        """)
+                username = ?
+        """, [username])
     
         number_of_entries = len(entries)
 
