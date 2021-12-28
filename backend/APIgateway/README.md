@@ -5,12 +5,12 @@ I'm not using the regular MVC, I am modifying the pattern in accordance with my 
 - **Controller**: handles all the logic
 - **View**: the window to the external world, receives the requests, dispatches them
 
-Model <----> database (sqlite)
-|
-|
-Controller
-|
-|
+Model <----> database (sqlite) <br>
+| <br>
+| <br>
+Controller <br>
+| <br>
+| <br>
 View <----> user (frontend)
 
 
