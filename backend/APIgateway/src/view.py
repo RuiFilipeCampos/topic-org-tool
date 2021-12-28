@@ -32,7 +32,7 @@ class Register(Dispatch):
 
     @classmethod
     def post(cls) -> dict:
-        payload:dict = request.json()
+        payload:dict = request.get_json()
         username = payload.get("username", None)
         password = payload.get("password", None)
 

@@ -1,4 +1,4 @@
-from APIgateway.src.settings import PRIVATE_KEY, SERVER_KEY
+from settings import PRIVATE_KEY, SERVER_KEY
 from errors import *
 import model
 
@@ -26,15 +26,19 @@ def auth(username = "", password = ""):
     return 200, None
 
 
-
 def new_user(username, password) -> bool:
     user_data = model.User.get(username)
     if user_data["status"] is not None:
         return False
+
+    print(user_data)
     
     model.User.new(
         username,
-        server_encrypt(SERVER_KEY, password)
+        server_encrypt(
+            SERVER_KEY,
+            ssh_decrypt(PRIVATE_KEY, password)
+        )
     )
 
     return True
