@@ -10,3 +10,6 @@ JWT_KEY = "B" # for encoding the JWTs
 SERVER_KEY  = b'B68Rleu3AoPt6tVSKGnGGDYc5JK9uUYZ8wlPBcbhwGk=' # for encrypting data to the database, super private
 PRIVATE_KEY = "" # for decrypting the pass from user
 PUBLIC_KEY  = "" # frontend has access to this guy
+
+HTTP_ONLY = True
+SECURE = False
