@@ -75,7 +75,7 @@ class BaseStrapiView:
             headers=CM.headers
         ).json()
 
-        return C200(data=payload["data"])
+        return C200("", data=payload["data"])
 
     @classmethod
     def post(cls, user_id, *args, **kwargs):
