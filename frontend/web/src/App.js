@@ -1,18 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
-import router from './routes';
+import routes from './routes';
 import {
   BrowserRouter,
-  Switch,
+  Routes,
+  Route,
 } from "react-router-dom";
+
+import { Login } from './pages/auth';
 
 function App() {
   return <>
-    <BrowserRouter>
-      <Switch>
-        {router}
-      </Switch>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Login/>}/>
+
+      <Route path="/register" element={<Login/>}/>
+      <Route path="/register/success" element={<Login/>}/>
+      <Route path="/register/failure" element={<Login/>}/>
+
+      <Route path="/dashboard" element={<Login/>}/>
+    </Routes>
   </>;
 }
 

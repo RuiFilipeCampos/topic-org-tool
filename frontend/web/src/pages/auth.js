@@ -1,4 +1,102 @@
 import React, {useState} from 'react';
+
+import { Button, FormControl, FormLabel, Input, SimpleGrid, GridItem, Center, Container, Flex, VStack, Text } from '@chakra-ui/react';
+import { UnlockIcon } from '@chakra-ui/icons'
+
+import { Heading } from '@chakra-ui/layout';
+
+import TextAnimation from "react-animate-text";
+
+const Motto = () => (
+    <Center w="container.xl">
+        <Text>
+        <TextAnimation charInterval={75}>
+            A clean place to <b>think</b>
+            , <i>plan</i> and <u>execute</u>...
+        </TextAnimation>
+        </Text>
+    </Center>
+)
+
+const Menu = () => <div>
+    <b>Login</b> | <u> Register </u>
+</div>
+
+const LoginForm = () => {
+
+    const grid_data = {
+        columns:1,
+        py:10,
+        px:39,
+        spacing:5,
+        shadow:"dark-lg",
+        bg:"white"
+    }
+
+    return <SimpleGrid {...grid_data}>
+        <GridItem>
+            <FormControl>
+                <FormLabel>Username</FormLabel>
+                <Input/>
+            </FormControl>
+        </GridItem>
+        <GridItem>
+            <FormControl>
+                <FormLabel>Password</FormLabel>
+                <Input/>
+            </FormControl>
+        </GridItem>
+        <GridItem>
+            <FormControl>
+                <Center>
+                    <Button  
+                        leftIcon={<UnlockIcon/>} 
+                        variant = "ghost" 
+                        colorScheme="black" 
+                        type="submit" 
+                        textAlign="center"> 
+                            Login
+                    </Button>
+                </Center>               
+            </FormControl>
+        </GridItem>
+    </SimpleGrid>
+}
+
+
+export const Login = () => {
+    const vstack_data = {
+        width:"full",
+        height:"full",
+        padding:10,
+        spacing:10,
+        alignItems:"center",
+    }
+
+    return <Container maxW="container.xl" p={0}>
+        <Flex h="100vh" py={20}>
+            <VStack  {...vstack_data}>
+                <Heading>Topic-Org</Heading>
+                <Motto />
+                <VStack>
+                    <Menu /> 
+                    <LoginForm/>
+                </VStack>
+            </VStack>
+        </Flex>
+    </Container>
+};
+
+
+
+
+
+
+
+
+
+
+/*
 import {
   Text, Link, Center,
   Input, Button, Box, Flex,
@@ -15,7 +113,6 @@ import { UnlockIcon } from '@chakra-ui/icons'
 var logged_in = false; 
 
 export function Login() {
-
     const [user,     setUser] = useState('');
     const [password, setPassword] = useState('');
 
@@ -39,9 +136,12 @@ export function Login() {
 
     const base_height = -10
 
-    return <>
+
+    return <> 
       <Center h="200">
-        <Text>A clean place to <b>think</b>, <i>plan</i> and <u>execute</u>...</Text>
+        <Text>
+            A clean place to <b>think</b>, <i>plan</i> and <u>execute</u>...
+        </Text>
       </Center>
 
       <VStack>
@@ -84,3 +184,4 @@ export function Login() {
     </>
   }
 
+*/

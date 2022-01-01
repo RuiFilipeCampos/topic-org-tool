@@ -23,6 +23,7 @@ var routes = [
     }
 ]
 
+
 var router = []
         
 for (let i = 0; i < routes.length; ++i){
