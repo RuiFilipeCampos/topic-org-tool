@@ -9,7 +9,10 @@ from settings import JWT_KEY
 from settings import HTTP_ONLY
 from settings import SECURE
 from responses import *
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 class Routes:
     @app.route("/auth/login", methods=["POST", "OPTIONS"])
@@ -31,6 +34,26 @@ class Routes:
     @app.route("/cm/topics", methods=["OPTIONS", "GET", "POST"])
     def all_topics():
         return Topics.dispatch()
+
+    @app.route("/auth/check", methods=["GET"])
+    def am_I_logged_in():
+
+        try:
+            jwt_token = request.cookies.get("jwt", None)
+            if jwt_token is None:
+                raise KeyError
+            user_id:int = jwt.decode(
+                jwt_token.encode(),
+                JWT_KEY,
+                algorithms="HS256"
+            )["user_id"]
+            return C200("")
+        except KeyError:
+            print("There is no cookie")
+            return C403("")
+        except:
+            print("likely decoding error")
+            return C403("")
 
 class CM:
     """ Connector to Content Managemer """
@@ -143,12 +166,19 @@ class DispatchLogic:
 class Login(DispatchLogic.Auth):
     @classmethod
     def options(cls):
-        pass
+        r = make_response()
+        r.headers['Access-Control-Allow-Origin'] = '*'
+        r.headers['Access-Control-Allow-Methods'] = '*'
+        r.headers['Access-Control-Allow-Headers'] = '*'
+        return r
+            
 
     @classmethod
     def post(cls):
         payload:dict = request.get_json()
+        
         username = payload.get("username", None)
+        print(username)
         password = payload.get("password", None)
 
         if username is None or password is None:
@@ -165,7 +195,11 @@ class Login(DispatchLogic.Auth):
             "jwt", 
             value=jwt, 
             httponly=HTTP_ONLY,
-            secure=SECURE
+            secure=SECURE,
+            path='/', 
+            max_age=90 * 60 * 60 * 24,
+            domain="172.21.64",
+            samesite='None',
         )
 
         return response

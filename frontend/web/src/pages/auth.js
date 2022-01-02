@@ -1,19 +1,30 @@
 import React, {useState} from 'react';
+import { 
+    Button, 
+    FormControl,
+    FormLabel, 
+    Input, 
+    SimpleGrid, 
+    GridItem, 
+    Center, 
+    Container, 
+    Flex, 
+    VStack, 
+    Text 
+} from '@chakra-ui/react';
 
-import { Button, FormControl, FormLabel, Input, SimpleGrid, GridItem, Center, Container, Flex, VStack, Text } from '@chakra-ui/react';
 import { UnlockIcon } from '@chakra-ui/icons'
-
 import { Heading } from '@chakra-ui/layout';
-
 import TextAnimation from "react-animate-text";
+import { amIloggedIn } from '../utils/check';
 
 const Motto = () => (
     <Center w="container.xl">
         <Text>
-        <TextAnimation charInterval={75}>
-            A clean place to <b>think</b>
-            , <i>plan</i> and <u>execute</u>...
-        </TextAnimation>
+            <TextAnimation charInterval={75}>
+                A clean place to <b>think</b>
+                , <i>plan</i> and <u>execute</u>...
+            </TextAnimation>
         </Text>
     </Center>
 )
@@ -22,7 +33,61 @@ const Menu = () => <div>
     <b>Login</b> | <u> Register </u>
 </div>
 
+
+const axios = require('axios');
+var BASE_URL = "http://127.0.0.1:5000"
+
+const handleLogin = (username, password) => {
+    const data = { 
+        username: username,
+        password: password
+    };
+
+    let config = {
+        headers:{
+            withCredentials:true
+        } 
+    }
+
+    axios.post(
+        BASE_URL + '/auth/login',
+        { 
+            username: username,
+            password: password
+        }, 
+        config
+    )
+    .then(function (response) {
+      // handle success
+      let status = response.data.status
+      if (status == 200){
+        if (amIloggedIn()){
+            window.location.href = "/dashboard"
+        }else{
+            alert("something went wrong")
+        }
+        
+      } else {
+          alert("Login not successful.")
+      }
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+      alert("Application error.")
+    })
+    .then(function () {
+      // always executed
+    });
+}
+
 const LoginForm = () => {
+    if (amIloggedIn()) {
+        window.location.href = "/dashboard"
+    }
+
+    let [username, setUsername] = useState('')
+    let [password, setPassword] = useState('')
 
     const grid_data = {
         columns:1,
@@ -37,13 +102,22 @@ const LoginForm = () => {
         <GridItem>
             <FormControl>
                 <FormLabel>Username</FormLabel>
-                <Input/>
+                <Input 
+                    onChange={
+                        e => setUsername(e.currentTarget.value)
+                    }
+                />
             </FormControl>
         </GridItem>
         <GridItem>
             <FormControl>
                 <FormLabel>Password</FormLabel>
-                <Input/>
+                <Input
+                    type="password"
+                    onChange={
+                        e => setPassword(e.currentTarget.value)
+                    }
+                />
             </FormControl>
         </GridItem>
         <GridItem>
@@ -54,7 +128,13 @@ const LoginForm = () => {
                         variant = "ghost" 
                         colorScheme="black" 
                         type="submit" 
-                        textAlign="center"> 
+                        textAlign="center"
+                        onClick = {
+                            () => handleLogin(
+                                username,
+                                password
+                            )
+                        }> 
                             Login
                     </Button>
                 </Center>               
@@ -62,7 +142,6 @@ const LoginForm = () => {
         </GridItem>
     </SimpleGrid>
 }
-
 
 export const Login = () => {
     const vstack_data = {
@@ -86,102 +165,3 @@ export const Login = () => {
         </Flex>
     </Container>
 };
-
-
-
-
-
-
-
-
-
-
-/*
-import {
-  Text, Link, Center,
-  Input, Button, Box, Flex,
-VStack, Spacer, Divider,
-  // form stuff
-  FormControl, FormLabel,
-  FormErrorMessage, FormHelperText,
-} from '@chakra-ui/react';
-
-import { useNavigate } from "react-router-dom";
-import CoolBox from "../components/coolbox"
-import ControlledInput from "../components/controlled"
-import { UnlockIcon } from '@chakra-ui/icons'
-var logged_in = false; 
-
-export function Login() {
-    const [user,     setUser] = useState('');
-    const [password, setPassword] = useState('');
-
-    let history = useNavigate()
-
-    if (logged_in){
-        history.push("/dashboard")
-    };
-
-    const handleSubmit = event => {
-        event.preventDefault();
-
-        var request_body = {
-            username: user,
-            password: password,
-        };
-
-
-        alert(`User: ${user} & Password: ${password}`);
-    };
-
-    const base_height = -10
-
-
-    return <> 
-      <Center h="200">
-        <Text>
-            A clean place to <b>think</b>, <i>plan</i> and <u>execute</u>...
-        </Text>
-      </Center>
-
-      <VStack>
-
-        <Center h={ (base_height).toString() }>
-            <Text> 
-                <b> Login </b> | <Link href="register"><u>Register</u></Link>
-            </Text>
-        </Center>
-
-        <Center h={ (base_height - 150).toString() }> 
-            <CoolBox>
-                <h1>Login to <b>TOPIC-ORG</b>...</h1>
-                <br/> <br/>
-
-                <form onSubmit={handleSubmit}>
-                    <Flex flexDirection="column">  
-                        <ControlledInput 
-                            label       = "Username"
-                            onChange    = {event => setUser(event.currentTarget.value)}
-                            variant = "outline"
-                        />
-                        <ControlledInput 
-                            label = "Password"
-                            type        = "password"
-                            variant = "outline"
-                            onChange    = {event => setPassword(event.currentTarget.value)}
-                        /> 
-                    </Flex>
-                    <FormControl >
-                        <Button leftIcon={<UnlockIcon/>} variant = "ghost" colorScheme="black"  type="submit" textAlign="center"> 
-                            Login
-                        </Button>  
-                    </FormControl>
-                </form>
-            </CoolBox>
-        </Center>
-
-      </VStack>
-    </>
-  }
-
-*/
