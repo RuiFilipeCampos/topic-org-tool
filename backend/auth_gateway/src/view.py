@@ -35,8 +35,14 @@ class Routes:
     def all_topics():
         return Topics.dispatch()
 
-    @app.route("/auth/check", methods=["GET"])
+    @app.route("/auth/check", methods=["GET", "OPTIONS"])
     def am_I_logged_in():
+        if request.method == "OPTIONS":
+            r = make_response()
+            r.headers['Access-Control-Allow-Origin'] = '*'
+            r.headers['Access-Control-Allow-Methods'] = '*'
+            r.headers['Access-Control-Allow-Headers'] = '*'
+            return r
 
         try:
             jwt_token = request.cookies.get("jwt", None)
@@ -190,6 +196,9 @@ class Login(DispatchLogic.Auth):
 
 
         response = make_response(C200("Logged in."))
+        import datetime
+        expire_date = datetime.datetime.now()
+        expire_date = expire_date + datetime.timedelta(days=90)
 
         response.set_cookie(
             "jwt", 
@@ -197,8 +206,9 @@ class Login(DispatchLogic.Auth):
             httponly=HTTP_ONLY,
             secure=SECURE,
             path='/', 
-            max_age=90 * 60 * 60 * 24,
-            domain="172.21.64",
+            expires = expire_date,
+        #    max_age=90 * 60 * 60 * 24,
+            domain="127.0.0.1",
             samesite='None',
         )
 

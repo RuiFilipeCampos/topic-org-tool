@@ -7,7 +7,7 @@ import {
     SimpleGrid, 
     GridItem, 
     Center, 
-    Container, 
+    Container,      
     Flex, 
     VStack, 
     Text 
@@ -18,19 +18,18 @@ import { Heading } from '@chakra-ui/layout';
 import TextAnimation from "react-animate-text";
 import { amIloggedIn } from '../utils/check';
 
-const Motto = () => (
-    <Center w="container.xl">
-        <Text>
-            <TextAnimation charInterval={75}>
-                A clean place to <b>think</b>
-                , <i>plan</i> and <u>execute</u>...
-            </TextAnimation>
-        </Text>
-    </Center>
-)
+const Motto = () => <Center w="container.xl">
+    <Text>
+        <TextAnimation charInterval={75}>
+            A clean place to <b>think</b>
+            , <i>plan</i> and <u>execute</u>...
+        </TextAnimation>
+    </Text>
+</Center>
+
 
 const Menu = () => <div>
-    <b>Login</b> | <u> Register </u>
+    <b> Login </b> | <u> Register </u>
 </div>
 
 
@@ -44,13 +43,10 @@ const handleLogin = (username, password) => {
     };
 
     let config = {
-        headers:{
-            withCredentials:true
-        } 
+        headers: { withCredentials:true } 
     }
 
-    axios.post(
-        BASE_URL + '/auth/login',
+    axios.post(BASE_URL + '/auth/login',
         { 
             username: username,
             password: password
@@ -63,7 +59,7 @@ const handleLogin = (username, password) => {
       if (status == 200){
         if (amIloggedIn()){
             window.location.href = "/dashboard"
-        }else{
+        } else {
             alert("something went wrong")
         }
         
@@ -143,25 +139,26 @@ const LoginForm = () => {
     </SimpleGrid>
 }
 
-export const Login = () => {
-    const vstack_data = {
-        width:"full",
-        height:"full",
-        padding:10,
-        spacing:10,
-        alignItems:"center",
-    }
 
-    return <Container maxW="container.xl" p={0}>
-        <Flex h="100vh" py={20}>
-            <VStack  {...vstack_data}>
-                <Heading>Topic-Org</Heading>
-                <Motto />
-                <VStack>
-                    <Menu /> 
-                    <LoginForm/>
-                </VStack>
+
+
+const vstack_data = {
+    width:"full",
+    height:"full",
+    padding:10,
+    spacing:10,
+    alignItems:"center",
+}
+
+export const Login = () => <Container maxW="container.xl" p={0}>
+    <Flex h="100vh" py={20}>
+        <VStack  {...vstack_data}>
+            <Heading>Topic-Org</Heading>
+            <Motto />
+            <VStack>
+                <Menu /> 
+                <LoginForm/>
             </VStack>
-        </Flex>
-    </Container>
-};
+        </VStack>
+    </Flex>
+</Container>
