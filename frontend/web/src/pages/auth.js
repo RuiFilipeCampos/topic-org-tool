@@ -32,9 +32,6 @@ const Menu = () => <div>
     <b> Login </b> | <u> Register </u>
 </div>
 
-
-const axios = require('axios');
-
 var post_config = {
     method:"POST",
     headers:{
