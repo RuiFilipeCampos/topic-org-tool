@@ -1,24 +1,20 @@
 import axios from "axios";
 
-
-var BASE_URL = "http://127.0.0.1:5000"
+var config = {
+  method:"GET",
+  credentials: 'include'
+}
 
 export function amIloggedIn(){
-  fetch("/smthin")
-
-
-
-    axios.get(BASE_URL + "/auth/check",
-    {withCredentials:true})
-    .then(function (response) {
-        // handle success
-        let status = response.data.status
-        if (status == 200){
+  return fetch("/auth/check", config)
+    .then(response => response.json())
+    .then(payload => {
+      
+        if (payload.status == 200){
           return true
-        } else {
-          return false
         }
+
+        return false
       }
     )
-
 }

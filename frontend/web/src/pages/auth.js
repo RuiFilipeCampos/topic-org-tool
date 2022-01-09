@@ -34,58 +34,65 @@ const Menu = () => <div>
 
 
 const axios = require('axios');
-var BASE_URL = "http://127.0.0.1:5000"
 
-const handleLogin = (username, password) => {
-    const data = { 
-        username: username,
-        password: password
-    };
+var post_config = {
+    method:"POST",
+    headers:{
+        'Content-Type': 'application/json',
+    },
+}
 
-    fetch(
-        "/auth/login",
+function post(endpoint, data)
+{
+    post_config.body = JSON.stringify(
+        JSON.stringify(data)
     )
 
+    return fetch("/auth/login", post_config)
+}
+
+const handleLogin = (username, password) => {
     let config = {
-        headers: { "withCredentials":true, "Content-Type":"application/json"  } 
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({ 
+            username: username,
+            password: password
+        })
     }
 
-
-    axios.post(BASE_URL + '/auth/login',
+    post("/auth/login", 
         { 
             username: username,
             password: password
-        }, 
-        config
-    )
-    .then(function (response) {
-      // handle success
-      let status = response.data.status
-      if (status == 200){
-        if (amIloggedIn()){
-            window.location.href = "/dashboard"
-        } else {
-            alert("something went wrong")
         }
-        
-      } else {
-          alert("Login not successful.")
-      }
+    )
+    .then(response => response.json())
+    .then(payload => {
+        if (payload.status != 200){
+            console.log("Login not successful.")
+        }
+
+        amIloggedIn().then(
+            status => {
+                if (status){
+                    window.location.href = "/dashboard"
+                }
+            }
+        )
     })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-      alert("Application error.")
-    })
-    .then(function () {
-      // always executed
-    });
 }
 
 const LoginForm = () => {
-    if (amIloggedIn()) {
-        window.location.href = "/dashboard"
-    }
+    amIloggedIn().then(
+        session_status => {
+            if (session_status){
+                window.location.href = "/dashboard"
+            }
+        }
+    )
 
     let [username, setUsername] = useState('')
     let [password, setPassword] = useState('')

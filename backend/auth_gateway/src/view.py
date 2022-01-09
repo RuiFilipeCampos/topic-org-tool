@@ -16,11 +16,6 @@ CORS(app)
 
 class Routes:
     @app.route("/auth/login", methods=["POST", "OPTIONS"])
-    @cross_origin(
-        supports_credentials=True, 
-        headers=['Content-Type', 'Authorization'],
-        domain="127.0.0.1:3000",
-    )
     def login_router():
         return Login.dispatch()
 
@@ -144,10 +139,7 @@ class DispatchLogic:
     class Auth:
         @classmethod
         def dispatch(cls):
-            if request.method == "OPTIONS":
-                return cls.options()
-
-            elif request.method == "POST":
+            if request.method == "POST":
                 return cls.post()
     
     class ContentManager:
@@ -182,8 +174,12 @@ class Login(DispatchLogic.Auth):
 
     @classmethod
     def post(cls):
-        payload:dict = request.get_json()
-        
+        payload = request.get_json()
+        if isinstance(payload, str):
+            import json
+            payload = json.loads(payload)
+
+
         username = payload.get("username", None)
         print(username)
         password = payload.get("password", None)
