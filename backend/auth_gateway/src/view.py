@@ -9,13 +9,18 @@ from settings import JWT_KEY
 from settings import HTTP_ONLY
 from settings import SECURE
 from responses import *
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
 
 class Routes:
     @app.route("/auth/login", methods=["POST", "OPTIONS"])
+    @cross_origin(
+        supports_credentials=True, 
+        headers=['Content-Type', 'Authorization'],
+        domain="127.0.0.1:3000",
+    )
     def login_router():
         return Login.dispatch()
 
@@ -36,16 +41,12 @@ class Routes:
         return Topics.dispatch()
 
     @app.route("/auth/check", methods=["GET", "OPTIONS"])
+    @cross_origin(supports_credentials=True,)
     def am_I_logged_in():
-        if request.method == "OPTIONS":
-            r = make_response()
-            r.headers['Access-Control-Allow-Origin'] = '*'
-            r.headers['Access-Control-Allow-Methods'] = '*'
-            r.headers['Access-Control-Allow-Headers'] = '*'
-            return r
 
         try:
             jwt_token = request.cookies.get("jwt", None)
+            print(jwt_token)
             if jwt_token is None:
                 raise KeyError
             user_id:int = jwt.decode(
@@ -191,26 +192,30 @@ class Login(DispatchLogic.Auth):
             return C400("Did you provide both `username` and `password`?")
 
         jwt = cntrl.auth(username, password)
+        print(jwt)
         if jwt is None:
             return C401("[401 Unauthorized] Login was not successful.")
 
 
-        response = make_response(C200("Logged in."))
+        response = make_response()
         import datetime
         expire_date = datetime.datetime.now()
         expire_date = expire_date + datetime.timedelta(days=90)
 
         response.set_cookie(
             "jwt", 
-            value=jwt, 
+            value=f"{jwt}", 
             httponly=HTTP_ONLY,
             secure=SECURE,
             path='/', 
             expires = expire_date,
-        #    max_age=90 * 60 * 60 * 24,
-            domain="127.0.0.1",
+        #    max_age=90 * 60 * 60 * 24, 
+            domain="127.0.0.1:3000",
             samesite='None',
         )
+
+        response.headers['Access-Control-Allow-Credentials'] = True
+
 
         return response
 

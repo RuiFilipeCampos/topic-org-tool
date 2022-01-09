@@ -42,9 +42,14 @@ const handleLogin = (username, password) => {
         password: password
     };
 
+    fetch(
+        "/auth/login",
+    )
+
     let config = {
-        headers: { withCredentials:true } 
+        headers: { "withCredentials":true, "Content-Type":"application/json"  } 
     }
+
 
     axios.post(BASE_URL + '/auth/login',
         { 
