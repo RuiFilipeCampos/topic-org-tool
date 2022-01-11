@@ -103,6 +103,18 @@ const LoginForm = () => {
         bg:"white"
     }
 
+    const login_button_data = {
+        leftIcon:<UnlockIcon/>, 
+        variant:"ghost" ,
+        colorScheme:"black", 
+        type:"submit" ,
+        textAlign:"center",
+        onClick: () => handleLogin(
+            username,
+            password
+        )
+    }
+
     return <SimpleGrid {...grid_data}>
         <GridItem>
             <FormControl>
@@ -128,19 +140,8 @@ const LoginForm = () => {
         <GridItem>
             <FormControl>
                 <Center>
-                    <Button  
-                        leftIcon={<UnlockIcon/>} 
-                        variant = "ghost" 
-                        colorScheme="black" 
-                        type="submit" 
-                        textAlign="center"
-                        onClick = {
-                            () => handleLogin(
-                                username,
-                                password
-                            )
-                        }> 
-                            Login
+                    <Button {...login_button_data}> 
+                        Login
                     </Button>
                 </Center>               
             </FormControl>
