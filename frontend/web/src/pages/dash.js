@@ -94,7 +94,7 @@ const CSS1 = {
 }
 
 const TopicStack = () => <VStack 
-    h="full" w="50" 
+    h="full" w="13" 
     bg="white" 
     px={100} 
     spacing="3" 
@@ -118,16 +118,17 @@ const TopicStack = () => <VStack
 </VStack>
 
 const Thread = (props) => <HStack w="99%">
-    <Box bg="red" shadow="xs"/>
-    <VStack w="99%" h="100%" px={.1} spacing={.9} shadow="lg">
+    <Flex w=".3%" h="100%" bg="black"><></></Flex>
+    <VStack w="99%" h="100%" px={.1} spacing={.9} >
         <Flex bg="white" w="full">
-            <Text textAlign="left">[-]</Text>   
+            <Text textAlign="left">[-] Edit • Delete</Text>   
         </Flex>
+        <Spacer/> <Spacer/><Spacer/>
         <Flex bg="white" w="full" p={.1}>
             <Text textAlign="left">
                 {props.content}
             </Text>   
-        </Flex>
+        </Flex><Spacer/> <Spacer/><Spacer/>
         <VStack bg="white" w="full" p={.1} alignContent="flex-start">
             {props.children}   
         </VStack>
@@ -142,23 +143,37 @@ const TopicView = () => <VStack
     overflow="scroll"
     css={CSS1}
 >
-    <Flex bg="yellow.100" w="90%" p={2} shadow="lg">
-        <VStack p={5} h="full" w="full" alignItems="left">
+    <Flex  w="100%" p={2} >
+        <VStack p={5} h="full" w="100%" alignItems="left">
             <Heading>Title of the topic...</Heading>
             <Text>asdsd asd</Text>     
         </VStack>  
     </Flex>
+    <Spacer />
     <Thread content="The top level markdown text, this may be a large text and stuff.">
         <Thread content="asdasdads"/>
     </Thread>
     <Thread content="asdasdads" />
+    <Thread content="The top level markdown text, this may be a large text and stuff.">
+        <Thread content="The top level markdown text, this may be a large text and stuff.">
+            <Thread content="asdasdads"/>
+        </Thread>
+    </Thread>
     <Thread content="asdasdads"/>
     <Thread content="asdasdads"/>
     <Thread content="asdasdads"/>
+    <Thread content="The top level markdown text, this may be a large text and stuff.">
+        <Thread content="The top level markdown text, this may be a large text and stuff.">
+            <Thread content="asdasdads"/>
+        </Thread>
+        <Thread content="The top level markdown text, this may be a large text and stuff.">
+            <Thread content="asdasdads"/>
+            <Thread content="asdasdads"/>
+            <Thread content="asdasdads"/>
+        </Thread>
+    </Thread>
     <Thread content="asdasdads"/>
     <Thread content="asdasdads"/>
-    <Thread content="asdasdads"/>
-
 </VStack>
 
 export default function Dashboard(){
