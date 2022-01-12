@@ -10,3 +10,4 @@ This is just the basic structure of it, will take a few iterations to make it lo
 ![dashboard](https://user-images.githubusercontent.com/63464503/149225344-cbec1378-91ae-4f73-82b4-ed0d5ffa5686.gif)
 
 
+![Animation](https://user-images.githubusercontent.com/63464503/149231946-be40f069-de9e-4631-8753-c9790328722a.gif)
