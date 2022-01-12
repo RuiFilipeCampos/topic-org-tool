@@ -48,6 +48,7 @@ function post(endpoint, data)
     return fetch("/auth/login", post_config)
 }
 
+var reload = false
 const handleLogin = (username, password) => {
     let config = {
         method:"POST",
@@ -71,25 +72,16 @@ const handleLogin = (username, password) => {
         if (payload.status != 200){
             console.log("Login not successful.")
         }
-
-        amIloggedIn().then(
-            status => {
-                if (status){
-                    window.location.href = "/dashboard"
-                }
-            }
-        )
+        
+        reload = true
+        window.location.href = "/"
     })
+
+
 }
 
 const LoginForm = () => {
-    amIloggedIn().then(
-        session_status => {
-            if (session_status){
-                window.location.href = "/dashboard"
-            }
-        }
-    )
+
 
     let [username, setUsername] = useState('')
     let [password, setPassword] = useState('')
@@ -160,15 +152,31 @@ const vstack_data = {
     alignItems:"center",
 }
 
-export const Login = () => <Container maxW="container.xl" p={0}>
-    <Flex h="100vh" py={20}>
-        <VStack  {...vstack_data}>
-            <Heading>Topic-Org</Heading>
-            <Motto />
-            <VStack>
-                <Menu /> 
-                <LoginForm/>
-            </VStack>
-        </VStack>
-    </Flex>
+export const Login = () => {
+    if (reload){
+        reload = false
+        window.location.href = "/dashboard"
+        
+    }
+    amIloggedIn().then(
+        session_status => {
+            if (session_status){
+                window.location.href = "/dashboard"
+            }
+        }
+    )
+
+  return <Container maxW="container.xl" p={0}>
+  <Flex h="100vh" py={20}>
+      <VStack  {...vstack_data}>
+          <Heading>Topic-Org</Heading>
+          <Motto />
+          <VStack>
+              <Menu /> 
+              <LoginForm/>
+          </VStack>
+      </VStack>
+  </Flex>
 </Container>
+
+}
