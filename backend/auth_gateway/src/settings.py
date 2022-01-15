@@ -12,4 +12,4 @@ PRIVATE_KEY = "" # for decrypting the pass from user
 PUBLIC_KEY  = "" # frontend has access to this guy
 
 HTTP_ONLY = True
-SECURE = True
+SECURE = False

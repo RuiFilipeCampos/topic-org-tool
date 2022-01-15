@@ -9,10 +9,7 @@ from settings import JWT_KEY
 from settings import HTTP_ONLY
 from settings import SECURE
 from responses import *
-from flask_cors import CORS, cross_origin
-
 app = Flask(__name__)
-CORS(app)
 
 class Routes:
     @app.route("/auth/login", methods=["POST", "OPTIONS"])
@@ -34,28 +31,6 @@ class Routes:
     @app.route("/cm/topics", methods=["OPTIONS", "GET", "POST"])
     def all_topics():
         return Topics.dispatch()
-
-    @app.route("/auth/check", methods=["GET", "OPTIONS"])
-    @cross_origin(supports_credentials=True,)
-    def am_I_logged_in():
-
-        try:
-            jwt_token = request.cookies.get("jwt", None)
-            print(jwt_token)
-            if jwt_token is None:
-                raise KeyError
-            user_id:int = jwt.decode(
-                jwt_token.encode(),
-                JWT_KEY,
-                algorithms="HS256"
-            )["user_id"]
-            return C200("")
-        except KeyError:
-            print("There is no cookie")
-            return C403("")
-        except:
-            print("likely decoding error")
-            return C403("")
 
 class CM:
     """ Connector to Content Managemer """
@@ -139,7 +114,10 @@ class DispatchLogic:
     class Auth:
         @classmethod
         def dispatch(cls):
-            if request.method == "POST":
+            if request.method == "OPTIONS":
+                return cls.options()
+
+            elif request.method == "POST":
                 return cls.post()
     
     class ContentManager:
@@ -165,53 +143,30 @@ class DispatchLogic:
 class Login(DispatchLogic.Auth):
     @classmethod
     def options(cls):
-        r = make_response()
-        r.headers['Access-Control-Allow-Origin'] = '*'
-        r.headers['Access-Control-Allow-Methods'] = '*'
-        r.headers['Access-Control-Allow-Headers'] = '*'
-        return r
-            
+        pass
 
     @classmethod
     def post(cls):
-        payload = request.get_json()
-        if isinstance(payload, str):
-            import json
-            payload = json.loads(payload)
-
-
+        payload:dict = request.get_json()
         username = payload.get("username", None)
-        print(username)
         password = payload.get("password", None)
 
         if username is None or password is None:
             return C400("Did you provide both `username` and `password`?")
 
         jwt = cntrl.auth(username, password)
-        print(jwt)
         if jwt is None:
             return C401("[401 Unauthorized] Login was not successful.")
 
 
-        response = make_response()
-        import datetime
-        expire_date = datetime.datetime.now()
-        expire_date = expire_date + datetime.timedelta(days=90)
+        response = make_response(C200("Logged in."))
 
         response.set_cookie(
             "jwt", 
-            value=f"{jwt}", 
+            value=jwt, 
             httponly=HTTP_ONLY,
-            secure=SECURE,
-            path='/', 
-            expires = expire_date,
-        #    max_age=90 * 60 * 60 * 24, 
-            domain="127.0.0.1:3000",
-            samesite='None',
+            secure=SECURE
         )
-
-        response.headers['Access-Control-Allow-Credentials'] = True
-
 
         return response
 
