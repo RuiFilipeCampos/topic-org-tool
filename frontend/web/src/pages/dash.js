@@ -123,7 +123,7 @@ const Thread = (props) => {
     const [collapsed, setCollapsed] = useState(false)
 
     function enter(){
-        setColor("red")
+        setColor("blue.400")
         setWidth(".6%")
 
     }
@@ -146,9 +146,7 @@ const Thread = (props) => {
             <VStack 
             onDoubleClick={()=>setCollapsed(!collapsed)}
             w="99%" h="100%" px={.1} spacing={.99}>
-                <Text 
-                
-                textAlign="left">----------------</Text>
+                <Text color="white">.</Text>
 
             </VStack>
         </HStack>
