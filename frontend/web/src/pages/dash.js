@@ -1,7 +1,7 @@
 
 
 import React, {useState} from 'react';
-
+import {BiCollapse} from 'react-icons/bi'
 import { redirectOnNoSession } from '../utils/check';
 import { Flex, HStack, VStack, Text, Container, Box, Spacer, Heading
  } from '@chakra-ui/layout';
@@ -117,24 +117,80 @@ const TopicStack = () => <VStack
     </VStack>
 </VStack>
 
-const Thread = (props) => <HStack w="99%">
-    <Flex w=".3%" h="100%" bg="black"><></></Flex>
-    <VStack w="99%" h="100%" px={.1} spacing={.9} >
-        <Flex bg="white" w="full">
-            <Text textAlign="left">[-] Edit • Delete</Text>   
-        </Flex>
-        <Spacer/> <Spacer/><Spacer/>
-        <Flex bg="white" w="full" p={.1}>
-            <Text textAlign="left">
-                {props.content}
-            </Text>   
-        </Flex><Spacer/> <Spacer/><Spacer/>
-        <VStack bg="white" w="full" p={.1} alignContent="flex-start">
-            {props.children}   
-        </VStack>
-    </VStack>
-</HStack>
+const Thread = (props) => {
+    const [width, setWidth] = useState(".3%")
+    const [color, setColor] = useState("black")
+    const [collapsed, setCollapsed] = useState(false)
 
+    function enter(){
+        setColor("red")
+        setWidth(".6%")
+
+    }
+
+    function leave(){
+        setColor("black")
+        setWidth(".3%")
+    }
+
+    if (collapsed){
+        return <HStack w="99%" 
+            onMouseEnter={enter}
+            onMouseLeave={leave}
+        >
+            <Flex w={width} h="100%" bg={color}
+                onClick={()=>setCollapsed(!collapsed)}
+            >
+                <></>
+            </Flex>
+            <VStack 
+            onDoubleClick={()=>setCollapsed(!collapsed)}
+            w="99%" h="100%" px={.1} spacing={.99}>
+                <Text 
+                
+                textAlign="left">----------------</Text>
+
+            </VStack>
+        </HStack>
+    
+    }
+
+
+
+
+    return <HStack w="99%" 
+    onMouseEnter={enter}
+        onMouseLeave={leave}
+    >
+        <Flex w={width} h="100%" bg={color}
+            onClick={()=>setCollapsed(!collapsed)}
+        >
+            <></>
+        </Flex>
+        <VStack w="99%" h="100%" px={.1} spacing={.99} 
+
+        >
+            <Flex bg="white" w="full" p={.1}>
+                <Text textAlign="left" onDoubleClick={()=>setCollapsed(!collapsed)}>
+                    {props.content}
+                </Text>   
+            </Flex>
+            <Flex bg="white" w="full">
+                <HStack w="full" h="full">
+                    <Text color="gray.500" _hover={{color:"black", as:"u"}}>New</Text>
+                    <Text color="gray.300">•</Text>
+                    <Text color="gray.500" _hover={{color:"black", as:"u"}}>Edit</Text>
+                    <Text color="gray.300">•</Text>
+                    <Text color="gray.500" _hover={{color:"red", as:"u"}}>Delete</Text>
+                </HStack>
+            </Flex>
+            <Spacer/><Spacer/><Spacer/>
+            <VStack bg="white" w="full" p={.1} alignContent="flex-start">
+                {props.children}   
+            </VStack>
+        </VStack>
+    </HStack>
+}
 
 const TopicView = () => <VStack 
     w="full" 
