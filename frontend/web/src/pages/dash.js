@@ -118,10 +118,17 @@ const TopicStack = () => <VStack
 </VStack>
 
 const Thread = (props) => <HStack w="99%">
-    <Flex w=".3%" h="100%" bg="black"><></></Flex>
-    <VStack w="99%" h="100%" px={.1} spacing={.9} >
+    <Flex w=".3%" h="100%" bg="black">
+        <></>
+    </Flex>
+    <VStack w="99%" h="100%" px={.1} spacing={.99} >
         <Flex bg="white" w="full">
-            <Text textAlign="left">[-] Edit • Delete</Text>   
+            <HStack w="full" h="full">
+                <Text textAlign="left">[ -]</Text>
+                <Text>Edit</Text>
+                <Text>•</Text>
+                <Text>Delete</Text>
+            </HStack>
         </Flex>
         <Spacer/> <Spacer/><Spacer/>
         <Flex bg="white" w="full" p={.1}>
