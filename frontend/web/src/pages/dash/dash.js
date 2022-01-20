@@ -2,7 +2,7 @@
 
 import React, {useState} from 'react';
 import {BiCollapse} from 'react-icons/bi'
-import { redirectOnNoSession } from '../utils/check';
+import { redirectOnNoSession } from '../../utils/check';
 import { Flex, HStack, VStack, Text, Container, Box, Spacer, Heading
  } from '@chakra-ui/layout';
 import { Textarea } from '@chakra-ui/textarea';

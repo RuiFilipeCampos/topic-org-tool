@@ -16,7 +16,7 @@ import {
 import { UnlockIcon } from '@chakra-ui/icons'
 import { Heading } from '@chakra-ui/layout';
 import TextAnimation from "react-animate-text";
-import { amIloggedIn } from '../utils/check';
+import { amIloggedIn } from '../../utils/check';
 
 const Motto = () => <Center w="container.xl">
     <Text>

@@ -6,8 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 
-import { Login } from './pages/auth';
-import Dashboard from './pages/dash';
+import { Login } from './pages/auth/auth';
+import Dashboard from './pages/dash/dash';
 
 function App() {
   return <>
