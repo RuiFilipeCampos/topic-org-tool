@@ -3,7 +3,7 @@ export const header_hstack = {
     px:100,
     bg:"white", 
     w:"full",
-    overflowX:"scroll",
+    // overflowX:"scroll",
     css:CSS
 }
 

@@ -1,6 +1,6 @@
 
 
-import React, {useState} from 'react';
+import React, {Component, useState} from 'react';
 import {BiCollapse} from 'react-icons/bi'
 import { redirectOnNoSession } from '../../utils/check';
 import { Flex, HStack, VStack, Text, Container, Box, Spacer, Heading
@@ -48,21 +48,148 @@ const CSS = {
     },
 }
 
-const header_heading_dot = {
-    color:"gray.300"
+const Headers = () => {
+    let [x, setX] = useState(0)
+    let [dragging, setDragging] = useState(false)
+    let [divcss, setDivcss] = useState({tranform: "translateX(0)"})
+
+    function handleMouseMove(event){
+        if (!dragging) return
+
+        let displacement = event.clientX - x
+        setX(event.clientX)
+        setDivcss({tranform: "translateX(10000px)"})
+    }
+
+    return <Flex {...header_flex} 
+                css = {divcss}
+                onMouseMove={handleMouseMove}
+                onMouseDown={() => setDragging(true)}
+                onMouseUp = {() => setDragging(false)}
+            >
+            <HStack user-select="none" {...header_hstack} overflow="hidden">  
+            <Heading  user-select="none" {...header_heading_text_selected}>
+            Calendar
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Journal
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            </HStack>
+    </Flex>
+
+
+
+    return <div>
+        <Flex {...header_flex}
+            onMouseMove={handleMouseMove}
+            onMouseDown={() => setDragging(true)}
+            onMouseUp = {() => setDragging(false)}
+        >
+            <HStack user-select="none" {...header_hstack}>  
+            <Heading  user-select="none" {...header_heading_text_selected}>
+            Calendar
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Journal
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            <Heading {...header_heading_dot}>
+            •
+            </Heading>
+            <Heading {...header_heading_text}>
+            Documents
+            </Heading>
+            </HStack>
+    </Flex>
+</div>
+
 }
 
-const header_heading_text = {
-    color:"gray.300",
-    _hover:{ color:"gray.400" }
-}
 
-const header_heading_text_selected = {
-    color:"black",
-}
-
-
-
+/*
 const Headers = () => <Flex {...header_flex}>
     <HStack {...header_hstack}>  
         <Heading {...header_heading_text_selected}>
@@ -120,7 +247,7 @@ const Headers = () => <Flex {...header_flex}>
 </Flex>
 
 
-
+*/
 
 
 
