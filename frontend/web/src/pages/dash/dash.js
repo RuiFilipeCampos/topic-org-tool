@@ -7,6 +7,15 @@ import { Flex, HStack, VStack, Text, Container, Box, Spacer, Heading
  } from '@chakra-ui/layout';
 import { Textarea } from '@chakra-ui/textarea';
 
+// Styles 
+import {
+    header_hstack, 
+    header_flex,
+    header_heading_text_selected,
+    header_heading_text,
+    header_heading_dot,
+} from './style'
+
 
 const Topic = () => <Flex w="full" bg="white" >
     <VStack bg="white" w="full" spacing="0.1" >
@@ -39,33 +48,82 @@ const CSS = {
     },
 }
 
+const header_heading_dot = {
+    color:"gray.300"
+}
 
-const Headers = () => <Flex  w="full" bg="white">
-    <HStack 
-      py={2} px={100}
-      bg="white" 
-      w="full" 
-      overflowX="scroll" css={CSS}
-    >  
-        <Heading> Calendar</Heading>
-        <Heading color="gray.300"> •</Heading>
-        <Heading color="gray.300" _hover={{color:"gray.400"}}> Journal</Heading>
-        <Heading color="gray.300" > •</Heading>
-        <Heading color="gray.300" _hover={{color:"gray.400"}}> Documents</Heading>
-        <Heading color="gray.300"> •</Heading>
-        <Heading color="gray.300" _hover={{color:"gray.400"}}> Documents</Heading>
-        <Heading color="gray.300"> •</Heading>
-        <Heading color="gray.300" _hover={{color:"gray.400"}}> Documents</Heading>
-        <Heading color="gray.300"> •</Heading>
-        <Heading color="gray.300" _hover={{color:"gray.400"}}> Documents</Heading>
-        <Heading color="gray.300"> •</Heading>
-        <Heading color="gray.300" _hover={{color:"gray.400"}}> Documents</Heading>
-        <Heading color="gray.300"> •</Heading>
-        <Heading color="gray.300" _hover={{color:"gray.400"}}> Documents</Heading>
-        <Heading color="gray.300"> •</Heading>
-        <Heading color="gray.300" _hover={{color:"gray.400"}}> Documents</Heading>
+const header_heading_text = {
+    color:"gray.300",
+    _hover:{ color:"gray.400" }
+}
+
+const header_heading_text_selected = {
+    color:"black",
+}
+
+
+
+const Headers = () => <Flex {...header_flex}>
+    <HStack {...header_hstack}>  
+        <Heading {...header_heading_text_selected}>
+            Calendar
+        </Heading>
+        <Heading {...header_heading_dot}>
+            •
+        </Heading>
+        <Heading {...header_heading_text}>
+            Journal
+        </Heading>
+        <Heading {...header_heading_dot}>
+            •
+        </Heading>
+        <Heading {...header_heading_text}>
+            Documents
+        </Heading>
+        <Heading {...header_heading_dot}>
+            •
+        </Heading>
+        <Heading {...header_heading_text}>
+            Documents
+        </Heading>
+        <Heading {...header_heading_dot}>
+            •
+        </Heading>
+        <Heading {...header_heading_text}>
+            Documents
+        </Heading>
+        <Heading {...header_heading_dot}>
+            •
+        </Heading>
+        <Heading {...header_heading_text}>
+            Documents
+        </Heading>
+        <Heading {...header_heading_dot}>
+            •
+        </Heading>
+        <Heading {...header_heading_text}>
+            Documents
+        </Heading>
+        <Heading {...header_heading_dot}>
+            •
+        </Heading>
+        <Heading {...header_heading_text}>
+            Documents
+        </Heading>
+        <Heading {...header_heading_dot}>
+            •
+        </Heading>
+        <Heading {...header_heading_text}>
+            Documents
+        </Heading>
     </HStack>
 </Flex>
+
+
+
+
+
+
 
 const ControlBar = () => <Flex  w="full" bg="white" shadow="md" >
     <HStack w="full" px="4">

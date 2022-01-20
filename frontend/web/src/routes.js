@@ -34,4 +34,4 @@ for (let i = 0; i < routes.length; ++i){
     )
 }
 
-export default router; 
+export default router;
