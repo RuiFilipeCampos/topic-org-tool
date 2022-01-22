@@ -11,5 +11,3 @@ This is just the basic structure of it, will take a few iterations to make it lo
 
 
 ![Animation](https://user-images.githubusercontent.com/63464503/149231946-be40f069-de9e-4631-8753-c9790328722a.gif)
-
-![](https://user-images.githubusercontent.com/63464503/149658051-70d59193-f202-41f2-8056-2b0689cc76cf.gif)
